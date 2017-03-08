@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>baseURL</key>
+	<string>http://130.211.107.26/elasticsearch/dna/sequence/MBMIA001-06/_create</string>
+	<key>bodyString</key>
+	<string>{"processid":"MBMIA001-06","sampleid":"MBIO2208.1","recordID":"510442","catalognum":"10199","fieldnum":"BMOO-191","institution_storing":"Florida Museum of Natural History","bin_uri":"BOLD:AAX1924","phylum_taxID":"20","phylum_name":"Arthropoda","class_taxID":"69","class_name":"Malacostraca","order_taxID":"336","order_name":"Decapoda","family_taxID":"1496","family_name":"Paguridae","genus_taxID":"84057","genus_name":"Pagurixus","species_taxID":"223240","species_name":"Pagurixus sp. 14","identification_provided_by":"Gustav Paulay","collectors":"Gustav Paulay","collectiondate":"2006-06-17","extrainfo":"ee696428-5c57-11de-98cb-001f29e2923c","lat":"-17.484","lon":"-149.824","country":"French Polynesia","region":"Society Islands","exactsite":"W side of Avaroa Pass","sequenceID":"2813958","markercode":"COI-5P","nucleotides":"--TATATTTTATTTTTGGAGCTTGAGCTGGAATAGTAGGAACCTCTTTAAGTTTAATTATTCGAGCAGAGTTAGGTCAACCTGGGAGATTAATTGGAGATGACCAGATTTATAATGTTATTGTTACAGCCCATGCTTTCGTAATAATTTTTTTTATAGTTATACCTATTATAATTGGAGGTTTTGGAAACTGGCTAGTTCCTTTAATACTAGGGGCTCCCGATATAGCTTTTCCTCGTATAAATAATATAAGATTTTGACTTCTTCCCCCTTCTTTAACACTATTACTAACAAGAGGAATAGTAGAAAGAGGGGTTGGTACTGGATGAACAGTTTATCCCCCATTATCAGCAGCTATTGCTCATGCAGGAGCTTCAGTAGATTTAGGAATTTTTTCTTTACATTTAGCAGGTGTTTCTTCTATTTTGGGAGCAGTCAATTTTATAACCACAGTAATTAATATACGGCCCTTAGGTATAACTATAGATCGAATACCTTTATTTGTATGAGCTGTATTTATTACGGCTATCTTACTTCTTCTTTCTCTTCCAGTATTAGCAGGAGCTATTACTATATTATTAACAGATCGTAATTTAAATACTTCCTTCTTTGATCCTGTGGGAGGGGGTGATCCCGTACTTTATCAACATTTG"}</string>
+	<key>followRedirect</key>
+	<true/>
+	<key>handleJSONPCallbacks</key>
+	<false/>
+	<key>headers</key>
+	<array/>
+	<key>httpMethod</key>
+	<string>PUT</string>
+	<key>jsonpScript</key>
+	<string></string>
+	<key>paramBodyUIChoice</key>
+	<integer>0</integer>
+	<key>parameters</key>
+	<array/>
+	<key>parametersType</key>
+	<integer>0</integer>
+	<key>presentBeforeChallenge</key>
+	<false/>
+	<key>stringEncoding</key>
+	<integer>4</integer>
+	<key>usingHTTPBody</key>
+	<true/>
+</dict>
+</plist>

@@ -1,0 +1,50 @@
+<html>
+<head>
+	<script src="jquery-1.11.2.min.js"></script>
+	<script src="treelib.js"></script>	
+</head>
+<body>
+
+<div id="newick"></div>
+
+<script>
+
+	var newick = '((a,b,c),(d,e));';
+	
+	//$('#newick').html(newick);
+	
+    var t = new Tree();
+	t.Parse(newick);
+	
+	console.log(t.WriteNewick());
+	
+	$('#newick').html('t=' + t.WriteNewick());
+	
+	
+	// OK, how to get tree order and use that to sort a list 
+	
+	
+	var n = new NodeIterator(t.root);
+	var q = n.Begin();
+	while (q != null)
+	{
+		if (q.IsLeaf())
+		{
+			var label = q.label;
+			console.log(label);
+		}
+		q = n.Next();
+	}	
+	
+	// OK, how to reroot a Tree
+	
+	
+
+
+</script>
+
+
+
+</body>
+</html>	
+    

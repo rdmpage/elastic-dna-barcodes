@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>baseURL</key>
+	<string>http://130.211.107.26/elasticsearch/dna/sequence/GBAP3058-13/_update</string>
+	<key>bodyString</key>
+	<string>{
+    "doc": {
+        "processid": "GBAP3058-13",
+        "sampleid": "JF743901",
+        "recordID": "3601416",
+        "catalognum": "JF743901",
+        "fieldnum": "JF743901",
+        "institution_storing": "Mined from GenBank, NCBI",
+        "bin_uri": "BOLD:ACE8268",
+        "phylum_taxID": "18",
+        "phylum_name": "Chordata",
+        "class_taxID": "50",
+        "class_name": "Amphibia",
+        "order_taxID": "219",
+        "order_name": "Anura",
+        "family_taxID": "195623",
+        "family_name": "Dicroglossidae",
+        "subfamily_taxID": "195624",
+        "subfamily_name": "Dicroglossinae",
+        "genus_taxID": "64057",
+        "genus_name": "Limnonectes",
+        "species_taxID": "64058",
+        "species_name": "Limnonectes modestus",
+        "sequenceID": "5427348",
+        "markercode": "COI-5P",
+        "genbank_accession": "JF743901",
+        "nucleotides": "TATACCTGGTTTTTGGTGCCTGATCCGGGATAGTTGGAACCGCACTTAGTCTGCTAATTCGAGCTGAGCTAAGCCAACCTGGCGCATTACTCGGTGATGACCAAATTTATAATGTCATCGTTACAGCTCACGCTTTCGTAATAATTTTCTTTATGGTCATGCCAATTTTAATTGGCGGCTTCGGAAATTGGCTTGTTCCCCTTATATTAGGTGCCCCTGACATAGCCTTTCCGCGAATAAACAACATGAGTTTTTGGCTTCTTCCACCATCTCTACTTCTTCTCCTTGCTTCTTCAATAGTTGAAGCCGGCGTAGGGACCGGATGAACTGTTTACCCACCCTTAGCTGGCAACCTTGCGCATGCCGGCCCATCAGTAGACCTTGCCATTTTTTCCCTACACTTAGCGGGTGTTTCATCTATCCTAGGGGCCATTAATTTTATCACAACTATTATTAACATAAAGCCCCCTTCAACAACTCAATACCAAACCCCCCTCTTTGTCTGATCTGTCTTAATTACCGCCGTTTTACTTCTTCTATCCCTACCAGTTTTAGCCGCAGGCATTACTATACTTCTTACCGATCGCAACTTAAATACTACCTTTTTTGATCCCGCAGGAGGAGGTGACCCTGTCCTATACCAGCA",
+        "lat":"0.53272",
+        "lon":"121.99700",
+        "geometry": {"type":"Point","coordinates":[121.99700,0.53272]}
+    }
+}</string>
+	<key>followRedirect</key>
+	<true/>
+	<key>handleJSONPCallbacks</key>
+	<false/>
+	<key>headers</key>
+	<array/>
+	<key>httpMethod</key>
+	<string>POST</string>
+	<key>jsonpScript</key>
+	<string></string>
+	<key>paramBodyUIChoice</key>
+	<integer>0</integer>
+	<key>parameters</key>
+	<array/>
+	<key>parametersType</key>
+	<integer>0</integer>
+	<key>presentBeforeChallenge</key>
+	<false/>
+	<key>stringEncoding</key>
+	<integer>4</integer>
+	<key>usingHTTPBody</key>
+	<true/>
+</dict>
+</plist>
