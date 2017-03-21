@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archive xmlns="http://rs.tdwg.org/dwc/text/">
+  <core encoding="utf-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://rs.tdwg.org/dwc/terms/MaterialSample">
+    <files>
+      <location>occurrences.tsv</location>
+    </files>
+    <id index="0"/>
+    <field index="0" term="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+    <field index="1" term="http://rs.tdwg.org/dwc/terms/otherCatalogNumbers"/>
+    <field index="2" term="http://rs.tdwg.org/dwc/terms/catalogNumber"/>
+    <field index="3" term="http://rs.tdwg.org/dwc/terms/institutionCode"/>
+    <field index="4" term="http://rs.tdwg.org/dwc/terms/fieldNumber"/>
+    <field index="5" term="http://rs.tdwg.org/dwc/terms/taxonID"/>
+    <field index="6" term="http://rs.tdwg.org/dwc/terms/phylum"/>
+    <field index="7" term="http://rs.tdwg.org/dwc/terms/class"/>
+    <field index="8" term="http://rs.tdwg.org/dwc/terms/order"/>
+    <field index="9" term="http://rs.tdwg.org/dwc/terms/family"/>
+    <field index="10" term="http://rs.tdwg.org/dwc/terms/genus"/>
+    <field index="11" term="http://rs.tdwg.org/dwc/terms/scientificName"/>
+    <field index="12" term="http://rs.tdwg.org/dwc/terms/identifiedBy"/>
+    <field index="13" term="http://rs.tdwg.org/dwc/terms/recordedBy"/>
+    <field index="14" term="http://rs.tdwg.org/dwc/terms/eventDate"/>
+    <field index="15" term="http://rs.tdwg.org/dwc/terms/lifestage"/>
+    <field index="16" term="http://rs.tdwg.org/dwc/terms/sex"/>
+    <field index="17" term="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/>
+    <field index="18" term="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+    <field index="19" term="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+    <field index="20" term="http://rs.tdwg.org/dwc/terms/georeferenceSources"/>
+    <field index="21" term="http://rs.tdwg.org/dwc/terms/coordinatePrecision"/>
+    <field index="22" term="http://rs.tdwg.org/dwc/terms/country"/>
+    <field index="23" term="http://rs.tdwg.org/dwc/terms/stateProvince"/>
+    <field index="24" term="http://rs.tdwg.org/dwc/terms/locality"/>
+    <field index="25" term="http://rs.tdwg.org/dwc/terms/associatedSequences"/>
+    <field term="http://rs.tdwg.org/dwc/terms/basisOfRecord" default="MaterialSample"/>
+  </core>
+  <extension encoding="utf-8" fieldsTerminatedBy="\t" linesTerminatedBy="\n" fieldsEnclosedBy="" ignoreHeaderLines="1" rowType="http://data.ggbn.org/schemas/ggbn/terms/Amplification">
+    <files>
+      <location>sequences.tsv</location>
+    </files>
+    <coreid index="0"/>
+    <field index="1" term="http://data.ggbn.org/schemas/ggbn/terms/geneticAccessionNumber"/>
+    <field index="2" term="http://data.ggbn.org/schemas/ggbn/terms/marker"/>
+    <field index="3" term="http://data.ggbn.org/schemas/ggbn/terms/consensusSequence"/>
+  </extension>
+</archive>

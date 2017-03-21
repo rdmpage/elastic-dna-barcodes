@@ -164,15 +164,17 @@ if (1)
 }
 	
 // taxon 
-if (0)
+if (1)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
 
 	$parameters = array(
-		'taxon' => 'Agnotecous',
+		//'taxon' => 'Agnotecous',
 		//'taxon' => 'Limnonectes',
 //		'taxon' => 'Xenopus',
 //		'taxon' => 'Biomphalaria',
+		'taxon' => 'Pristimantis',
+		//'taxon' => 'Oreobates',
 		'marker' => 'COI-5P',
 		'format' => 'tsv'
 		);	

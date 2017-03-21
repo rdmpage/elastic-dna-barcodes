@@ -1,4 +1,7 @@
 
+
+
+//----------------------------------------------------------------------------------------
 function list_hits_phylosort(results, newick, label_to_id)
 {
     var t = new Tree();
@@ -48,6 +51,7 @@ function list_hits_phylosort(results, newick, label_to_id)
 
 }
 
+//----------------------------------------------------------------------------------------
 function list_hits(results, label_to_id)
 {
 	//alert('x');

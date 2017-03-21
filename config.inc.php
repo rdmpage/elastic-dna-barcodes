@@ -33,5 +33,18 @@ $config['elastic_options'] = array(
 		'host' => '130.211.107.26',
 		'port' => 80
 		);
+		
+		
+// CouchDB--------------------------------------------------------------------------------
+$config['couchdb_options'] = array(
+	'database' => 'elastic',
+	'host' => 'localhost',
+	'port' => 5984,
+	'prefix' => 'http://'
+	);		
+
+
+$config['stale'] = true;
+
 	
 ?>

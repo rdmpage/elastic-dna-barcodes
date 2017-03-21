@@ -58,10 +58,18 @@
 			// create the tile layer with correct attribution
 			var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 			var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-			var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 12, attribution: osmAttrib});		
+			var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 12, attribution: osmAttrib});	
+			
+			
+			// barcodes
+    		var barcodeAttrib='DNA sequences';
+			var barcode = new L.TileLayer('api_tile.php?x={x}&y={y}&z={z}', 
+				{minZoom: 0, maxZoom: 14, attribution: barcodeAttrib});
+				
 
 			map.setView(new L.LatLng(0, 0),4);
-			map.addLayer(osm);		
+			map.addLayer(osm);	
+			map.addLayer(barcode);		
 			
 			var drawnItems = new L.FeatureGroup();
 		map.addLayer(drawnItems);
@@ -275,6 +283,10 @@
 </div>
 
 <div style="clear:both;"></div>
+
+<div id="matrix"></div>
+
+
 <div id="table"></div>
 
 

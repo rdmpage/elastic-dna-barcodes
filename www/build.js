@@ -3,6 +3,33 @@ var results ={};
 var label_to_id = {};
 var label_to_bin = {};
 
+//----------------------------------------------------------------------------------------
+// distance matrix
+function hits_as_dist(D)
+{
+	var html = '';
+	
+	
+	var n = D.length;
+
+	for (var i = 1; i < n; i++)
+	{
+		html += '';
+		
+		for (var j = 0; j < i; j++)
+		{
+			html += D[i][j] + ' ';
+		}
+		
+		html += '<br />';
+	}
+	
+	$('#matrix').html(html);
+
+}
+
+
+
 function buildtree(results)
 {
 
@@ -88,6 +115,8 @@ function buildtree(results)
 		}
 	}
 
+	
+
 	for (var i = 1; i < n; i++) {
 		for (var j = 0; j < i; j++) {
 			var d = 0;
@@ -100,6 +129,14 @@ function buildtree(results)
 			D[j][i] = d;
 		}
 	}
+	
+	//hits_as_dist(D);
+	
+	// note that tree buildign will destroy values in matrix D, so if
+	// we wnt it beyond here we will need to make a copy
+
+
+
 
 	//document.write(JSON.stringify(D, null, 2));
 
