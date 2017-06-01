@@ -1,0 +1,187 @@
+<?xml version="1.0" ?>
+<!DOCTYPE GBSet PUBLIC "-//NCBI//NCBI GBSeq/EN" "https://www.ncbi.nlm.nih.gov/dtd/NCBI_GBSeq.dtd">
+<GBSet>
+<GBSeq>
+  <GBSeq_locus>KP420745</GBSeq_locus>
+  <GBSeq_length>633</GBSeq_length>
+  <GBSeq_strandedness>double</GBSeq_strandedness>
+  <GBSeq_moltype>DNA</GBSeq_moltype>
+  <GBSeq_topology>linear</GBSeq_topology>
+  <GBSeq_division>INV</GBSeq_division>
+  <GBSeq_update-date>03-FEB-2017</GBSeq_update-date>
+  <GBSeq_create-date>09-JUN-2015</GBSeq_create-date>
+  <GBSeq_definition>Lepidoptera sp. NZAC 03012668 voucher NZAC:03012668 cytochrome oxidase subunit I (COI) gene, partial cds; mitochondrial</GBSeq_definition>
+  <GBSeq_primary-accession>KP420745</GBSeq_primary-accession>
+  <GBSeq_accession-version>KP420745.1</GBSeq_accession-version>
+  <GBSeq_other-seqids>
+    <GBSeqid>gb|KP420745.1|</GBSeqid>
+    <GBSeqid>gi|808154348</GBSeqid>
+  </GBSeq_other-seqids>
+  <GBSeq_source>mitochondrion Lepidoptera sp. NZAC 03012668</GBSeq_source>
+  <GBSeq_organism>Lepidoptera sp. NZAC 03012668</GBSeq_organism>
+  <GBSeq_taxonomy>Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Hexapoda; Insecta; Pterygota; Neoptera; Holometabola; Lepidoptera; unclassified Lepidoptera</GBSeq_taxonomy>
+  <GBSeq_references>
+    <GBReference>
+      <GBReference_reference>1</GBReference_reference>
+      <GBReference_position>1..633</GBReference_position>
+      <GBReference_authors>
+        <GBAuthor>Drummond,A.J.</GBAuthor>
+        <GBAuthor>Newcomb,R.D.</GBAuthor>
+        <GBAuthor>Buckley,T.R.</GBAuthor>
+        <GBAuthor>Xie,D.</GBAuthor>
+        <GBAuthor>Dopheide,A.</GBAuthor>
+        <GBAuthor>Potter,B.C.</GBAuthor>
+        <GBAuthor>Heled,J.</GBAuthor>
+        <GBAuthor>Ross,H.A.</GBAuthor>
+        <GBAuthor>Tooman,L.</GBAuthor>
+        <GBAuthor>Grosser,S.</GBAuthor>
+        <GBAuthor>Park,D.</GBAuthor>
+        <GBAuthor>Demetras,N.J.</GBAuthor>
+        <GBAuthor>Stevens,M.I.</GBAuthor>
+        <GBAuthor>Russell,J.C.</GBAuthor>
+        <GBAuthor>Anderson,S.H.</GBAuthor>
+        <GBAuthor>Carter,A.</GBAuthor>
+        <GBAuthor>Nelson,N.</GBAuthor>
+      </GBReference_authors>
+      <GBReference_title>Evaluating a multigene environmental DNA approach for biodiversity assessment</GBReference_title>
+      <GBReference_journal>Gigascience 4, 46 (2015)</GBReference_journal>
+      <GBReference_xref>
+        <GBXref>
+          <GBXref_dbname>doi</GBXref_dbname>
+          <GBXref_id>10.1186/s13742-015-0086-1</GBXref_id>
+        </GBXref>
+      </GBReference_xref>
+      <GBReference_pubmed>26445670</GBReference_pubmed>
+      <GBReference_remark>Publication Status: Online-Only</GBReference_remark>
+    </GBReference>
+    <GBReference>
+      <GBReference_reference>2</GBReference_reference>
+      <GBReference_position>1..633</GBReference_position>
+      <GBReference_authors>
+        <GBAuthor>Newcomb,R.D.</GBAuthor>
+        <GBAuthor>Tooman,L.</GBAuthor>
+        <GBAuthor>Dopheide,A.</GBAuthor>
+        <GBAuthor>Xie,D.</GBAuthor>
+        <GBAuthor>Ward,L.</GBAuthor>
+      </GBReference_authors>
+      <GBReference_title>Direct Submission</GBReference_title>
+      <GBReference_journal>Submitted (08-JAN-2015) School of Biological Sciences, University of Auckland, 3a Symonds St., Auckland 1010, New Zealand</GBReference_journal>
+    </GBReference>
+  </GBSeq_references>
+  <GBSeq_feature-table>
+    <GBFeature>
+      <GBFeature_key>source</GBFeature_key>
+      <GBFeature_location>1..633</GBFeature_location>
+      <GBFeature_intervals>
+        <GBInterval>
+          <GBInterval_from>1</GBInterval_from>
+          <GBInterval_to>633</GBInterval_to>
+          <GBInterval_accession>KP420745.1</GBInterval_accession>
+        </GBInterval>
+      </GBFeature_intervals>
+      <GBFeature_quals>
+        <GBQualifier>
+          <GBQualifier_name>organism</GBQualifier_name>
+          <GBQualifier_value>Lepidoptera sp. NZAC 03012668</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>organelle</GBQualifier_name>
+          <GBQualifier_value>mitochondrion</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>mol_type</GBQualifier_name>
+          <GBQualifier_value>genomic DNA</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>specimen_voucher</GBQualifier_name>
+          <GBQualifier_value>NZAC:03012668</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>db_xref</GBQualifier_name>
+          <GBQualifier_value>taxon:1597356</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>country</GBQualifier_name>
+          <GBQualifier_value>New Zealand</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>lat_lon</GBQualifier_name>
+          <GBQualifier_value>36.2154 S 175.075 E</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>collection_date</GBQualifier_name>
+          <GBQualifier_value>06-Dec-2010</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>PCR_primers</GBQualifier_name>
+          <GBQualifier_value>fwd_name: lco1490, fwd_seq: ggtcaacaaatcataaagatattgg, rev_name: hco2198, rev_seq: taaacttcagggtgaccaaaaaatca</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>note</GBQualifier_name>
+          <GBQualifier_value>Leaf-Litter-Collection</GBQualifier_value>
+        </GBQualifier>
+      </GBFeature_quals>
+    </GBFeature>
+    <GBFeature>
+      <GBFeature_key>gene</GBFeature_key>
+      <GBFeature_location>&lt;1..&gt;633</GBFeature_location>
+      <GBFeature_intervals>
+        <GBInterval>
+          <GBInterval_from>1</GBInterval_from>
+          <GBInterval_to>633</GBInterval_to>
+          <GBInterval_accession>KP420745.1</GBInterval_accession>
+        </GBInterval>
+      </GBFeature_intervals>
+      <GBFeature_partial5 value="true"/>
+      <GBFeature_partial3 value="true"/>
+      <GBFeature_quals>
+        <GBQualifier>
+          <GBQualifier_name>gene</GBQualifier_name>
+          <GBQualifier_value>COI</GBQualifier_value>
+        </GBQualifier>
+      </GBFeature_quals>
+    </GBFeature>
+    <GBFeature>
+      <GBFeature_key>CDS</GBFeature_key>
+      <GBFeature_location>&lt;1..&gt;633</GBFeature_location>
+      <GBFeature_intervals>
+        <GBInterval>
+          <GBInterval_from>1</GBInterval_from>
+          <GBInterval_to>633</GBInterval_to>
+          <GBInterval_accession>KP420745.1</GBInterval_accession>
+        </GBInterval>
+      </GBFeature_intervals>
+      <GBFeature_partial5 value="true"/>
+      <GBFeature_partial3 value="true"/>
+      <GBFeature_quals>
+        <GBQualifier>
+          <GBQualifier_name>gene</GBQualifier_name>
+          <GBQualifier_value>COI</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>codon_start</GBQualifier_name>
+          <GBQualifier_value>2</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>transl_table</GBQualifier_name>
+          <GBQualifier_value>5</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>product</GBQualifier_name>
+          <GBQualifier_value>cytochrome oxidase subunit I</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>protein_id</GBQualifier_name>
+          <GBQualifier_value>AKC96503.1</GBQualifier_value>
+        </GBQualifier>
+        <GBQualifier>
+          <GBQualifier_name>translation</GBQualifier_name>
+          <GBQualifier_value>TLYFIFGIWAGMVGTSLSLLIRAELGSPGSLIGDDQIYNTIVTAHAFIMIFFMVMPIMIGGFGNWLVPLMLGAPDMAFPRMNNMSFWLLPPSIMLLISSSIVENGAGTGWTVYPPLSSNIAHSGSSVDLAIFSLHLAGISSILGAVNFITTIINMRPNNMSLDQMPLFVWAVGITALLLLLSLPVLAGAITMLLTDRNLNTSFFDPAGGG</GBQualifier_value>
+        </GBQualifier>
+      </GBFeature_quals>
+    </GBFeature>
+  </GBSeq_feature-table>
+  <GBSeq_sequence>aacattatattttatttttggaatttgagcaggaatagtaggaacctctttaagattattaattcgagctgaattaggaagacctggttctttaatcggagatgatcaaatttataatactattgtaactgctcacgcttttattataattttttttatagttatacccattataattggaggatttggaaattgattagtgcctcttatattaggagctcctgatatagctttcccccgtataaacaatataagattttgacttcttcccccctctattatattattaatttcaagtagaattgtagaaaacggagcaggtacaggatgaacagtttaccccccactttcatcaaatattgctcatagaggaagatcagtagatttagctattttctctttacacttagctggaatttcatcaattttaggggctgtaaattttatcacaactattatcaatatacgacctaataatatatcattagatcaaataccattatttgtttgagcagttggaattacagccctattacttttattatcattacctgtattggctggtgctattactatattattaacagatcgaaatttaaatacttcattttttgatcctgctggaggaggaga</GBSeq_sequence>
+</GBSeq>
+
+</GBSet>

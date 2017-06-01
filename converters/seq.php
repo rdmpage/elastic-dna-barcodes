@@ -487,10 +487,14 @@ function fetch_sequences($ids)
 	//echo $url . '<br/>';
 	
 	$xml = get($url);
+
+	//$xml = file_get_contents('KP420745.xml');
+	//$xml = file_get_contents('JQ173912.xml');
 	
-	echo "Get sequences\n";
 	
-	echo $xml;
+	//echo "Get sequences\n";
+	
+	//echo $xml;
 	
 	
 	// process
@@ -506,11 +510,18 @@ function fetch_sequences($ids)
 		{	
 			$genbank_record = new stdclass;
 		
-		
 			$accs = $xpath->query ('GBSeq_locus', $GBSeq);
 			foreach ($accs as $acc)
 			{
 				$genbank_record->GBSeq_locus = $acc->firstChild->nodeValue;
+				$genbank_record->materialSampleID  = $acc->firstChild->nodeValue;
+			}
+			
+			// taxonomy
+			$accs = $xpath->query ('GBSeq_taxonomy', $GBSeq);
+			foreach ($accs as $acc)
+			{
+				$genbank_record->higherClassification = $acc->firstChild->nodeValue;
 			}
 			
 			// references
@@ -582,7 +593,6 @@ function fetch_sequences($ids)
 			$quals = $xpath->query ('GBSeq_feature-table/GBFeature/GBFeature_quals/GBQualifier', $GBSeq);
 			foreach ($quals as $qual)
 			{
-				//echo 'x';
 				$k = '';
 				$v = '';
 
@@ -599,6 +609,9 @@ function fetch_sequences($ids)
 				
 				switch ($k)
 				{
+					case 'collected_by':
+						$genbank_record->{$k} = $v;
+						break;
 				
 					case 'collection_date':
 						$genbank_record->{$k} = $v;
@@ -633,12 +646,24 @@ function fetch_sequences($ids)
 						$genbank_record->{$k} = $v;
 						break;
 						
+					case 'dbxref':
+						if (preg_match('/taxon:/', $v))
+						{
+							$genbank_record->taxonID = $v;
+						}
+						break;
+						
 					case 'identified_by':
+						$genbank_record->{$k} = $v;
+						break;
+						
+					case 'organism':
 						$genbank_record->{$k} = $v;
 						break;
 											
 					case 'isolate':
 						$genbank_record->{$k} = $v;
+						$genbank_record->otherCatalogNumbers[] = $genbank_record->{$k};
 						break;						
 
 					case 'lat_lon':
@@ -650,8 +675,7 @@ function fetch_sequences($ids)
 						break;						
 												
 					case 'specimen_voucher':
-						$genbank_record->{$k} = $v;
-						
+						$genbank_record->{$k} = $v;						
 						$genbank_record->otherCatalogNumbers[] = $genbank_record->{$k};
 						
 						// Try to interpret them
@@ -731,13 +755,13 @@ function fetch_sequences($ids)
 		}
 	}
 	
-	print_r($hits);
-
-	
+	return $hits;
 }
 
 //----------------------------------------------------------------------------------------
 
+if (0)
+{
 $ids = array('JF744363.1');
 
 //$ids=array('KP420745');
@@ -748,8 +772,52 @@ $ids=array('EU594660.1');
 
 $ids=array('KT728116.1');
 
+$ids=array('FJ527039',
+'FJ873459',
+'KC787555',
+'FJ487941',
+'EU009983',
+'EU604148',
+'EU604147',
+'EU593543',
+'EU593544',
+'EU593554',
+'KU853486',
+'FJ873460',
+'GQ465044',
+'KP322964',
+'KY105576',
+'KU853485',
+'KR912071',
+'DQ990017',
+'EU593547',
+'KJ460376',
+'KJ460375',
+'KM243712',
+'KY446900',
+'KY446898',
+'AM946763',
+'KF246552',
+'AM931015',
+'KP322982',
+'KP322947',
+'KY105575',
+'GQ465043',
+'GQ465042',
+'GQ465045',
+'KU052084',
+'KT186106',
+'KF953496',
+'JQ425382',
+'JQ425376',
+'JN030990');
+
+$ids=array('EU604148');
+$ids = array('KP420745');
+$ids=array('JQ173912');
+
 $hits = fetch_sequences($ids);
 
-
+}
 
 ?>

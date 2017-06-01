@@ -156,15 +156,15 @@ if (1)
 	// FFMBH Spatial heterogeneity in the Mediterranean Biodiversity Hotspot affects barcoding accuracy of its freshwater fishes
 	// INLE Barcoding of fish species from Inle Lake basin in Myanmar [INLE] see also https://dx.doi.org/10.3897%2FBDJ.4.e10539
 	// DSCHA see http://dx.doi.org/10.1371/journal.pone.0099546
-
+	// DS-LIFE Lizard Island fish see https://doi.org/10.3897/BDJ.5.e12409
 	$parameters = array(
-		'container' => 'DSCHA',
+		'container' => 'DS-LIFE',
 		'format' => 'tsv'
 		);
 }
 	
 // taxon 
-if (1)
+if (0)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
 
