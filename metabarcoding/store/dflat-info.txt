@@ -1,0 +1,6 @@
+deltaScheme: ReDD/0.1/1.0
+currentScheme: file
+objectScheme: Dflat/0.20/1.0
+fullScheme: Dnatural/0.19
+classScheme: CLOP/0.3
+manifestScheme: Checkm/0.1

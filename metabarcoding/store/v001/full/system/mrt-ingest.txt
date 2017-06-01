@@ -1,0 +1,24 @@
+ingest:	UC3 ingest
+submissionDate:	2016-05-14T08:35:55-07:00
+batch:	bid-d7163674-5370-4cf7-876f-a09d882d0537
+job:	jid-dff09842-aaf6-478e-bc32-e2555de4a823
+userAgent:	jdeck/John Deck
+file:	BIOCODE_Methods.fasta
+type:	file
+profile:	moorea_biocode_content
+collection:	ark:/13030/m50g3m0s
+storageService:	http://storage.cdlib.org:35121
+storageNode:	9001
+notification:	neiltahiti@gmail.com;jdeck@berkeley.edu
+suppliedIdentifier:	(:unas)
+digestType:	(:unas)
+digestValue:	(:unas)
+creator:	Christopher Meyer
+title:	Moorea Biocode Project FASTA data
+date:	May 14, 2017
+localIdentifier:	(:unas)
+note:	(:unas)
+containerValidity:	n/a
+assignedIdentifier:	ark:/13030/m5478zfg
+retrievedIdentifier:	(:unas)
+handlers:	org.cdlib.mrt.ingest.handlers.HandlerInitialize/not-available,org.cdlib.mrt.ingest.handlers.HandlerAccept/not-available,org.cdlib.mrt.ingest.handlers.HandlerVerify/not-available,org.cdlib.mrt.ingest.handlers.HandlerDisaggregate/not-available,org.cdlib.mrt.ingest.handlers.HandlerRetrieve/not-available,org.cdlib.mrt.ingest.handlers.HandlerCorroborate/not-available,org.cdlib.mrt.ingest.handlers.HandlerCharacterize/not-available,org.cdlib.mrt.ingest.handlers.HandlerMinter/not-available,org.cdlib.mrt.ingest.handlers.HandlerDescribe/not-available,org.cdlib.mrt.ingest.handlers.HandlerDocument/not-available,org.cdlib.mrt.ingest.handlers.HandlerDigest/not-available,org.cdlib.mrt.ingest.handlers.HandlerTransfer/not-available,org.cdlib.mrt.ingest.handlers.HandlerNotification/not-available,org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue/not-available,org.cdlib.mrt.ingest.handlers.HandlerCleanup/not-available

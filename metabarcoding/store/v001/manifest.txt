@@ -1,0 +1,15 @@
+#%checkm_0.7
+#%profile | http://uc3.cdlib.org/registry/store/manifest/mrt-object-manifest
+#%prefix | nfo:<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#>
+#%prefix | nie:<http://www.semanticdesktop.org/ontologies/2007/01/19/nie/#>
+#%prefix | mrt:<http://uc3.cdlib.org/ontology/mrt/mom#>
+#%columns | nfo:fileName | nfo:hashAlgorithm | nfo:hashValue | nfo:fileSize | nfo:fileLastModified | nie:mimeType
+system/mrt-mom.txt | sha256 | 4f260eb6f43f5afa725caa19e0a392906bc18509c5f20b4f0c631cde5188867b | 80 | 2017-05-02T04:50:03-07:00 | text/plain
+system/mrt-dc.xml | sha256 | f40dd72e54b7e93c389895de1c13922fe5ac2ac226d7159a9704ae6f19a67929 | 149 | 2017-05-02T04:50:03-07:00 | application/xml
+system/mrt-ingest.txt | sha256 | 6072f8b8385093dec40e42e7da4ce2e2181f023bf0724c931d22964dde372092 | 1615 | 2017-05-02T04:50:03-07:00 | text/plain
+system/mrt-owner.txt | sha256 | b28526259e1d46c63811a332f601bd14319c7f5d2d6c18b62e7a84673012aeba | 19 | 2017-05-02T04:50:03-07:00 | text/plain
+system/mrt-object-map.ttl | sha256 | 86da5ba2874cbcf1d8d37f24e2123365e708600ad4f8083a913d8d0917a0dcad | 2533 | 2017-05-02T04:50:03-07:00 | plain/turtle
+producer/BIOCODE_Methods.fasta | sha256 | f41840a9e4d94172c20e4d65e52e67181d1cd1d051875f4e70fae88309200a55 | 11794380 | 2017-05-02T04:50:03-07:00 | text/plain
+system/mrt-erc.txt | sha256 | fc84c71d44a3bdc6ac9cbe970855380bee5e6f95d9f726fb0be75ec339dbcdfa | 130 | 2017-05-02T04:50:03-07:00 | text/plain
+system/mrt-membership.txt | sha256 | a7d626e7a2512e23332107c28987993ce20a723514fe9d764b7b863b6aea561d | 20 | 2017-05-02T04:50:03-07:00 | text/plain
+#%eof

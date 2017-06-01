@@ -1,0 +1,32 @@
+@prefix ore:     <http://www.openarchives.org/ore/terms#> .
+@prefix mrt:     <http://uc3.cdlib.org/ontology/mom#> .
+@prefix msc:     <http://uc3.cdlib.org/ontology/schema#> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-owner.txt>
+      mrt:metadataSchema msc:MRT-owner ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/plain> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-erc.txt>
+      mrt:metadataSchema msc:ERC ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/x-anvl> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-object-map.ttl>
+      mrt:metadataSchema msc:MRT-ORE ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/turtle> ;
+      ore:describes <http://n2t.net/ark:/13030/m5478zfg> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-mom.txt>
+      mrt:metadataSchema msc:MRT-MOM ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/plain> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-membership.txt>
+      mrt:metadataSchema msc:MRT-membership ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/plain> .
+
+<http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-ingest.txt>
+      mrt:metadataSchema msc:MRT-ingest ;
+      mrt:mimeType <http://purl.org/NET/mediatypes/text/x-anvl> .
+
+<http://n2t.net/ark:/13030/m5478zfg>
+      mrt:hasMetadata <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-owner.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-erc.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-object-map.ttl> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-membership.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-mom.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-ingest.txt> ;
+      ore:aggregates <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-owner.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-erc.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/producer%2FBIOCODE_Methods.fasta> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-object-map.ttl> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-mom.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-membership.txt> , <http://merritt.cdlib.org/d/ark%3A%2F13030%2Fm5478zfg/0/system%2Fmrt-ingest.txt> .

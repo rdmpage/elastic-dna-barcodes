@@ -1,0 +1,6 @@
+erc:	
+who:	Christopher Meyer
+what:	Moorea Biocode Project FASTA data
+when:	May 14, 2017
+where:	ark:/13030/m5478zfg
+where:	(:unas)

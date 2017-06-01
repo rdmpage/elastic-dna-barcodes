@@ -1,0 +1,3 @@
+type:		MRT-curatorial
+role:		MRT-content
+primaryIdentifier:	ark:/13030/m5478zfg
