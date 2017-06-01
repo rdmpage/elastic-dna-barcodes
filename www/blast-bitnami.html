@@ -188,7 +188,7 @@
 			<button id="search" onclick="search();">Search</button>
 		</div>
 
-
+<div id="newick"></div>
 
 
 <div width="100%">
@@ -215,7 +215,8 @@ function search() {
 	var seq =  $('#seq').val();
 	seq = clean_sequence(seq);
 	
-	var q = { size: 200, query: { match: { consensusSequence: ""}}};
+	//var q = { size: 200, query: { match: { consensusSequence: ""}}};
+	var q = { size: 40, query: { match: { consensusSequence: ""}}};
 	q.query.match.consensusSequence = seq;
 
 	$.getJSON('proxy.php?url=' 
@@ -228,6 +229,7 @@ function search() {
 			// build tree from 
 			
 			var newick = buildtree(data);
+			$('#newick').html(newick);
 			
 			//list_hits(data);
 			
