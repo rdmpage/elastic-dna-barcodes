@@ -495,8 +495,7 @@ function fetch_sequences($ids)
 	//echo "Get sequences\n";
 	
 	//echo $xml;
-	
-	
+		
 	// process
 	if ($xml != '')
 	{
@@ -607,8 +606,11 @@ function fetch_sequences($ids)
 					$v = $value->firstChild->nodeValue;
 				}
 				
+				//echo $k . '=' . $v . "\n";
+				
 				switch ($k)
 				{
+					
 					case 'collected_by':
 						$genbank_record->{$k} = $v;
 						break;
@@ -646,7 +648,7 @@ function fetch_sequences($ids)
 						$genbank_record->{$k} = $v;
 						break;
 						
-					case 'dbxref':
+					case 'db_xref':
 						if (preg_match('/taxon:/', $v))
 						{
 							$genbank_record->taxonID = $v;
