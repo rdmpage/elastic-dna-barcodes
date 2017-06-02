@@ -197,7 +197,7 @@ function write_meta($filename = 'meta.xml')
 
 
 // project 
-if (0)
+if (1)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
 	
@@ -232,7 +232,7 @@ if (0)
 }
 
 // BIN
-if (1)
+if (0)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
 
@@ -428,6 +428,11 @@ if ($data)
 					$media->identifier = str_replace('#', '%23', $media->identifier);
 					// encode '+' otherwise GBIF breaks
 					$media->identifier = str_replace('+', '%2B', $media->identifier);
+
+					// encode '[' otherwise GBIF breaks
+					$media->identifier = str_replace('[', '%5B', $media->identifier);
+					// encode ']' otherwise GBIF breaks
+					$media->identifier = str_replace(']', '%5D', $media->identifier);
 				
 					// URL of barcode page 
 					$media->references =  'http://bins.boldsystems.org/index.php/Public_RecordView?processid=' . $occurrence->{'dwc:materialSampleID'};
