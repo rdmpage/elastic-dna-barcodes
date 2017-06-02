@@ -23,6 +23,9 @@ $key_to_dwca = array(
 'species_name'					=> 'dwc:scientificName',
 'identification_provided_by'	=> 'dwc:identifiedBy',
 
+// type status
+'typeStatus'				=> 'dwc:typeStatus', // Not a BOLD field, but type info can be in 'voucher_type'
+
 // event
 'collectors' 		=> 'dwc:recordedBy',
 'collectiondate'	=> 'dwc:eventDate',
@@ -141,6 +144,52 @@ function write_meta($filename = 'meta.xml')
 		
 		$count++;
 	}		
+	
+	// images
+  
+	// extension
+	$extension = $meta->createElement('extension');
+	$extension->setAttribute('encoding', 'utf-8');
+	$extension->setAttribute('fieldsTerminatedBy', '\t');
+	$extension->setAttribute('linesTerminatedBy', '\n');
+	$extension->setAttribute('fieldsEnclosedBy', '');
+	$extension->setAttribute('ignoreHeaderLines', '1');
+	$extension->setAttribute('rowType', 'http://rs.gbif.org/terms/1.0/Multimedia');
+	$extension = $archive->appendChild($extension);
+
+	// files
+	$files = $extension->appendChild($meta->createElement('files'));
+	$location = $files->appendChild($meta->createElement('location'));
+	$location->appendChild($meta->createTextNode('images.tsv'));
+	
+	$coreid = $extension->appendChild($meta->createElement('coreid'));
+	$coreid->setAttribute('index', '0');
+	
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('index', '1');
+	$field->setAttribute('term', 'http://purl.org/dc/terms/title');
+
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('index', '2');
+	$field->setAttribute('term', 'http://purl.org/dc/terms/identifier');
+
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('index', '3');
+	$field->setAttribute('term', 'http://purl.org/dc/terms/references');
+
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('index', '4');
+	$field->setAttribute('term', 'http://purl.org/dc/terms/format');
+
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('index', '5');
+	$field->setAttribute('term', 'http://purl.org/dc/terms/license');
+	
+	// defaults
+	$field = $extension->appendChild($meta->createElement('field'));
+	$field->setAttribute('term', 'http://purl.org/dc/terms/type');
+	$field->setAttribute('default', 'StillImage');
+	
 
 	//echo $meta->saveXML();
 	file_put_contents($filename, $meta->saveXML());
@@ -148,7 +197,7 @@ function write_meta($filename = 'meta.xml')
 
 
 // project 
-if (1)
+if (0)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
 	
@@ -157,8 +206,9 @@ if (1)
 	// INLE Barcoding of fish species from Inle Lake basin in Myanmar [INLE] see also https://dx.doi.org/10.3897%2FBDJ.4.e10539
 	// DSCHA see http://dx.doi.org/10.1371/journal.pone.0099546
 	// DS-LIFE Lizard Island fish see https://doi.org/10.3897/BDJ.5.e12409
+	// DS-NGSTYPES DNA barcodes from century-old type specimens using next-generation sequencing
 	$parameters = array(
-		'container' => 'DS-LIFE',
+		'container' => 'DS-NGSTYPES',
 		'format' => 'tsv'
 		);
 }
@@ -173,13 +223,27 @@ if (0)
 		//'taxon' => 'Limnonectes',
 //		'taxon' => 'Xenopus',
 //		'taxon' => 'Biomphalaria',
-		'taxon' => 'Pristimantis',
+		//'taxon' => 'Pristimantis',
 		//'taxon' => 'Oreobates',
+		'taxon' => 'Pingasa',
 		'marker' => 'COI-5P',
 		'format' => 'tsv'
 		);	
 }
 
+// BIN
+if (1)
+{
+	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
+
+	$parameters = array(
+		'bin' => 'BOLD:AAD6226',
+		'marker' => 'COI-5P',
+		'format' => 'tsv'
+		);	
+}
+
+// geo
 if (0)
 {
 	$url = 'http://www.boldsystems.org/index.php/API_Public/combined';
@@ -197,6 +261,24 @@ $url .= '?' . http_build_query($parameters);
 
 
 write_meta();
+
+// clean up any existing files
+if (file_exists('occurrences.tsv'))
+{
+	unlink('occurrences.tsv');
+}
+if (file_exists('sequences.tsv'))
+{
+	unlink('sequences.tsv');
+}
+if (file_exists('images.tsv'))
+{
+	unlink('images.tsv');
+}
+if (file_exists('references.tsv'))
+{
+	unlink('references.tsv');
+}
 
 $zip = new ZipArchive();
 $filename = "dwca.zip";
@@ -239,16 +321,22 @@ if ($data)
 			file_put_contents('occurrences.tsv', join("\t", $key_to_dwca) . "\n");
 			file_put_contents('sequences.tsv', join("\t", $key_to_ggbn) . "\n");
 			
-			
+			file_put_contents('images.tsv', "dwc:materialSampleID\tdcterms:title\tdcterms:identifier\tdcterms:references\tdcterms:format\tdcterms:license\n");
 		}
 		else
 		{			
 			$occurrence = new stdclass;
+			
+			$occurrence->{'dwc:typeStatus'}  = '';
+			
 			$sequence = new stdclass;
+			
+			$image_urls = array();
+			$copyright_licenses = array();
 			
 			$n = count($row);
 			for ($i = 0; $i < $n; $i++)
-			{
+			{			
 				if (trim($row[$i]) != '')
 				{
 					// Darwin Core terms
@@ -262,8 +350,31 @@ if ($data)
 					{
 						$sequence->{$key_to_ggbn[$keys[$i]]} = $row[$i];
 					}
+					
+					if ($keys[$i] == 'image_urls')
+					{
+						$image_urls = explode("|", $row[$i]);
+					}
+					if ($keys[$i] == 'copyright_licenses')
+					{
+						$copyright_licenses  = explode("|", $row[$i]);
+					}
+					
+					// handle type specimens
+					if ($keys[$i] == 'voucher_type')
+					{
+						if (preg_match('/Type:\s*/', $row[$i]))
+						{
+							$occurrence->{'dwc:typeStatus'} = preg_replace('/Type:\s*/', '', $row[$i]);
+						}
+					}
+					
 				}
 			}
+			
+			//print_r($occurrence);
+			
+			//exit();
 			
 			// dump as row of data for Darwin Core...
 			// or can we just dump TSV file and use meta.xml cleverly?
@@ -283,20 +394,92 @@ if ($data)
 			}
 			file_put_contents('occurrences.tsv', join("\t", $values) . "\n", FILE_APPEND);			
 
-			$values = array();
-			foreach ($key_to_ggbn as $k => $v)
+			// sequences?
+			if (isset($sequence->{'ggbn:consensusSequence'}))
 			{
-				if (isset($sequence->{$v}))
+				$values = array();
+				foreach ($key_to_ggbn as $k => $v)
 				{
-					$values[] = $sequence->{$v};
+					if (isset($sequence->{$v}))
+					{
+						$values[] = $sequence->{$v};
+					}
+					else
+					{
+						$values[] = '';
+					}
 				}
-				else
-				{
-					$values[] = '';
-				}
+				file_put_contents('sequences.tsv', join("\t", $values) . "\n", FILE_APPEND);			
 			}
-			file_put_contents('sequences.tsv', join("\t", $values) . "\n", FILE_APPEND);			
 			
+			// images?	
+			if (count($image_urls))
+			{
+				$n = count($image_urls);
+				for ($i =0; $i < $n; $i++)
+				{
+					$media = new stdclass;
+				
+					$media->occurrenceID = $occurrence->{'dwc:materialSampleID'};
+					$media->title = $occurrence->{'dwc:materialSampleID'};
+			
+					$media->identifier = $image_urls[$i];
+					// some URLs have # symbol (why?)
+					$media->identifier = str_replace('#', '%23', $media->identifier);
+					// encode '+' otherwise GBIF breaks
+					$media->identifier = str_replace('+', '%2B', $media->identifier);
+				
+					// URL of barcode page 
+					$media->references =  'http://bins.boldsystems.org/index.php/Public_RecordView?processid=' . $occurrence->{'dwc:materialSampleID'};
+				
+					$media->format = '';
+					if (preg_match('/\.(?<extension>[a-z]{3,4})$/i', $image_urls[$i], $m))
+					{
+						switch (strtolower($m['extension']))
+						{
+							case 'gif':
+								$media->format = 'image/gif';
+								break;
+							case 'jpg':
+							case 'jpeg':
+								$media->format = 'image/jpeg';
+								break;
+							case 'png':
+								$media->format = 'image/png';
+								break;
+							case 'tif':
+							case 'tiff':
+								$media->format = 'image/tiff';
+								break;
+							default:
+								break;
+						}
+					}
+					$media->license = $copyright_licenses[$i]; //  dcterms.license
+				
+					// Convert to URL if possible
+					switch ($media->license)
+					{
+						case 'CreativeCommons - Attribution':
+							$media->license = 'https://creativecommons.org/licenses/by/3.0/';
+							break;
+						
+						default:
+							break;
+					}
+				
+					$values = array();
+					foreach ($media as $k => $v)
+					{
+						$values[] = $v;
+					}
+
+					//echo join("\t", $values) . "\n";
+					file_put_contents('images.tsv', join("\t", $values) . "\n", FILE_APPEND);
+				}								
+			
+			}			
+					
 		}
 		$row_count++;
 	}
@@ -304,6 +487,7 @@ if ($data)
 
 $zip->addFile(dirname(__FILE__) . '/occurrences.tsv', 'dwca/occurrences.tsv');
 $zip->addFile(dirname(__FILE__) . '/sequences.tsv', 'dwca/sequences.tsv');
+$zip->addFile(dirname(__FILE__) . '/images.tsv', 'dwca/images.tsv');
 $zip->close();
 
 
