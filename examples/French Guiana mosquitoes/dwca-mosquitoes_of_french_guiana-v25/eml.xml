@@ -1,0 +1,327 @@
+<eml:eml xmlns:eml="eml://ecoinformatics.org/eml-2.1.1"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.1 http://rs.gbif.org/schema/eml-gbif-profile/1.1/eml.xsd"
+         packageId="5a8aa2ad-261c-4f61-a98e-26dd752fe1c5/v25.10" system="http://gbif.org" scope="system"
+         xml:lang="eng">
+
+<dataset>
+  <alternateIdentifier>5a8aa2ad-261c-4f61-a98e-26dd752fe1c5</alternateIdentifier>
+  <alternateIdentifier>http://130.120.204.55:8080/ipt/resource?r=mosquitoes_of_french_guiana</alternateIdentifier>
+  <title xml:lang="eng">Mosquitoes_of_French_Guiana</title>
+      <creator>
+    <individualName>
+        <givenName>Stanislas</givenName>
+      <surName>Talaga</surName>
+    </individualName>
+    <organizationName>CNRS; Laboratoire Ecologie des Forêts de Guyane (Ecofog; UMR-CNRS 8172)</organizationName>
+    <positionName>PhD student</positionName>
+    <address>
+        <deliveryPoint>Campus agronomique</deliveryPoint>
+        <city>Kourou</city>
+        <postalCode>97310</postalCode>
+        <country>GF</country>
+    </address>
+    <electronicMailAddress>stantalaga@free.fr</electronicMailAddress>
+      </creator>
+      <metadataProvider>
+    <individualName>
+        <givenName>Stanislas</givenName>
+      <surName>Talaga</surName>
+    </individualName>
+    <organizationName>CNRS; Laboratoire Ecologie des Forêts de Guyane (Ecofog; UMR-CNRS 8172)</organizationName>
+    <positionName>PhD student</positionName>
+    <address>
+        <deliveryPoint>Campus agronomique</deliveryPoint>
+        <city>Kourou</city>
+        <postalCode>97310</postalCode>
+        <country>GF</country>
+    </address>
+    <electronicMailAddress>stantalaga@free.fr</electronicMailAddress>
+      </metadataProvider>
+      <associatedParty>
+    <individualName>
+        <givenName>Stanislas</givenName>
+      <surName>Talaga</surName>
+    </individualName>
+    <organizationName>CNRS; Laboratoire Ecologie des Forêts de Guyane (Ecofog; UMR-CNRS 8172)</organizationName>
+    <positionName>PhD student</positionName>
+    <address>
+        <deliveryPoint>Campus agronomique</deliveryPoint>
+        <city>Kourou</city>
+        <postalCode>97310</postalCode>
+        <country>GF</country>
+    </address>
+    <electronicMailAddress>stantalaga@free.fr</electronicMailAddress>
+    <role>originator</role>
+      </associatedParty>
+      <associatedParty>
+    <individualName>
+        <givenName>Jérôme</givenName>
+      <surName>Murienne</surName>
+    </individualName>
+    <organizationName>CNRS/UPS/ENFA; Laboratoire Evolution et Diversité Biologique (EDB; UMR-CNRS 5174)</organizationName>
+    <positionName>Dr.</positionName>
+    <address>
+        <deliveryPoint>Université de Toulouse, 118 route de Narbonne</deliveryPoint>
+        <city>Toulouse</city>
+        <postalCode>31062</postalCode>
+        <country>FR</country>
+    </address>
+    <electronicMailAddress>jerome.murienne@univ-tlse3.fr</electronicMailAddress>
+    <role>programmer</role>
+      </associatedParty>
+      <associatedParty>
+    <individualName>
+        <givenName>Alain</givenName>
+      <surName>Dejean</surName>
+    </individualName>
+    <organizationName>CNRS/UPS/INP; Laboratoire Ecologie fonctionnelle et Environnement (Ecoloab; UMR-CNRS 5245)</organizationName>
+    <positionName>Prof.</positionName>
+    <address>
+        <deliveryPoint>Université de Toulouse, 118 route de Narbonne</deliveryPoint>
+        <city>Toulouse</city>
+        <postalCode>31062</postalCode>
+        <country>FR</country>
+    </address>
+    <electronicMailAddress>alain.dejean@wanadoo.fr</electronicMailAddress>
+    <role>editor</role>
+      </associatedParty>
+      <associatedParty>
+    <individualName>
+        <givenName>Céline</givenName>
+      <surName>Leroy</surName>
+    </individualName>
+    <organizationName>IRD; Laboratoire de botAnique et Modélisation de l&apos;Architecture des Plantes et des végétations (AMAP; UMR-IRD 123)</organizationName>
+    <positionName>Dr.</positionName>
+    <address>
+        <deliveryPoint>Boulevard de la Lironde, TA A‐51/PS2</deliveryPoint>
+        <city>Montpellier</city>
+        <postalCode>34398</postalCode>
+        <country>FR</country>
+    </address>
+    <electronicMailAddress>celine.leroy@ird.fr</electronicMailAddress>
+    <role>editor</role>
+      </associatedParty>
+  <pubDate>
+      2017-06-02
+  </pubDate>
+  <language>eng</language>
+  <abstract>
+    <para>We present here a database providing information on mosquito specimens (Arthropoda, Diptera, Culicidae) collected in French Guiana. Field collections were initiated in 2013 under the auspices of the CEnter for the study of Biodiversity in Amazonia (CEBA: www.labexceba.fr/en/). This study is part of an ongoing process aiming to understand the distribution of mosquitoes, including vector species, across French Guiana. Occurrences are recorded after each collecting trip in a database managed by the laboratory Evolution et Diversité Biologique (EDB), Toulouse, France. The dataset is updated monthly and is available online. Voucher specimens and their associated DNA are stored at the laboratory Ecologie des Forêts de Guyane (Ecofog), Kourou, French Guiana. The latest version of the dataset is accessible through EDB’s Integrated Publication Toolkit at http://130.120.204.55:8080/ipt/resource.do?r=mosquitoes_of_french_guiana or through the Global Biodiversity Information Facility data portal at http://www.gbif.org/dataset/5a8aa2ad-261c-4f61-a98e-26dd752fe1c5. It can also be viewed through the Guyanensis platform at http://guyanensis.ups-tlse.fr.</para>
+  </abstract>
+      <keywordSet>
+            <keyword>Occurrence</keyword>
+        <keywordThesaurus>GBIF Dataset Type Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_type.xml</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+            <keyword>French Guiana</keyword>
+        <keywordThesaurus>n/a</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+            <keyword>Neotropics</keyword>
+        <keywordThesaurus>n/a</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+            <keyword>Mosquitoes</keyword>
+        <keywordThesaurus>n/a</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+            <keyword>Diversity</keyword>
+        <keywordThesaurus>n/a</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+            <keyword>Specimen</keyword>
+        <keywordThesaurus>GBIF Dataset Subtype Vocabulary: http://rs.gbif.org/vocabulary/gbif/dataset_subtype.xml</keywordThesaurus>
+      </keywordSet>
+  <additionalInfo>
+    <para>We would like to thank Pierre Solbes and Sébastien Cally from the EDB laboratory for technical support, Marceau Minot, Frédéric Petitclerc and the team of the Unité d’Entomologie Médicale (UEM) of the Pasteur Institute of Cayenne for field help, Clémence Mouza for the pictures of voucher specimens and Andrea Yockey-Dejean for proofreading the manuscript. The EDB laboratory is funded by Investissement d&apos;Avenir grants managed by the French Agence Nationale de la Recherche (CEBA: ANR-10-LABX-25-01; TULIP: ANR-10-LABX-41, ANR-11-IDEX-0002-02).</para>
+  </additionalInfo>
+  <intellectualRights>
+    <para>This work is licensed under a Creative Commons Attribution- NonCommercial 4.0 International Public License. http://creativecommons.org/licenses/by- nc/4.0/. Users of this resource should also comply with the CEBA data sharing agreement available here: www.labex-ceba.fr/assets/CEBA_Data_Sharing_Agreement_nov2013.pdf</para>
+  </intellectualRights>
+  <coverage>
+      <geographicCoverage>
+          <geographicDescription>The sampling area is delimited by the current administrative boundaries of the territory of French Guiana (Fig. 2). To the East, the Oyapock River delimits the border with Brazil. To the West, the Maroni River delimits the border with Suriname. The territory’s borders have not been constant throughout history and a large portion of northern Brazil was disputed between France and Brazil during the 19th century. As a result, the type locality of Counani, French Guiana from where the nomen dubium Culex americanus Neveu-Lemaire 1902 was described (Belkin et al. 1971) is currently in Brazil. Even though French Guiana is a French overseas region, all occurrences have been recorded under the country &quot;French Guiana&quot; to comply with the ISO 3166-1 standard.</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-54.61</westBoundingCoordinate>
+          <eastBoundingCoordinate>-51.53</eastBoundingCoordinate>
+          <northBoundingCoordinate>5.85</northBoundingCoordinate>
+          <southBoundingCoordinate>2.09</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+          <taxonomicCoverage>
+              <generalTaxonomicCoverage>This database concerns all mosquito species inhabiting French Guiana. Most specimens were identified to the species level or at least to the genus level by the first author. Until now, the database was mostly filled with data from studies conducted on mosquitoes breeding in phytotelmata, which explains why the Sabethini are particularly well represented in the current dataset (Fig. 1). Therefore, some tribes like the Anophelini, Culicini and Mansoniini are highly under represented and the tribes Aedeomyiini and Uranotaeniini are not at all represented (Fig. 1). The dataset includes occurrences of twelve species recently recorded in French Guiana (Talaga et al. 2015), namely: Onirion sp. cf Harbach and Peyton (2000), Sabethes (Peytonulus) hadrognathus Harbach, Sa. (Pey.) paradoxus Harbach, Sa. (Pey.) soperi Lane and Cerqueira, Sa. (Sabethinus) idiogenes Harbach, Sa. (Sabethes) quasicyaneus Peryassú, Runchomyia (Ctenogoeldia) magna (Theobald), Wyeomyia (Caenomyiella) sp. cf Harbach and Peyton (1990), Wy. (Dendromyia) ypsipola Dyar, Wy. (Hystatomyia) lamellata (Bonne-Wepster and Bonne), Wy. (Miamyia) oblita (Lutz), and Toxorhynchites (Lynchiella) guadeloupensis (Dyar and Knab).</generalTaxonomicCoverage>
+              <taxonomicClassification>
+                  <taxonRankName>kingdom</taxonRankName>
+                <taxonRankValue>Animalia</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>phylum</taxonRankName>
+                <taxonRankValue>Arthropoda</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>class</taxonRankName>
+                <taxonRankValue>Insecta</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>order</taxonRankName>
+                <taxonRankValue>Diptera</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>family</taxonRankName>
+                <taxonRankValue>Culicidae</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>subfamily</taxonRankName>
+                <taxonRankValue>Anophelinae</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>subfamily</taxonRankName>
+                <taxonRankValue>Culicinae</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Aediomyiini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Aedini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Culicini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Mansoniini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Orthopodomyiini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Sabethini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Toxorhynchitini</taxonRankValue>
+              </taxonomicClassification>
+              <taxonomicClassification>
+                  <taxonRankName>tribe</taxonRankName>
+                <taxonRankValue>Uranotaeniini</taxonRankValue>
+              </taxonomicClassification>
+          </taxonomicCoverage>
+  </coverage>
+  <purpose>
+    <para>Mosquitoes are probably the most medically important group of arthropods worldwide because of the ability of some species to transmit pathogens to humans (Clements 2011), causing major health issues in some parts of the world. Mosquito-borne diseases are frequent in French Guiana with malaria occurring mainly in inland areas, dengue and chikungunya in urban areas, while many lesser known crypto-arboviruses occur in sylvan and/or rural environments (Chippaux and Pajot 1983). The mosquito family (Arthropoda, Diptera, Culicidae) is composed of 3,543 valid species (Harbach 2015) and French Guiana harbors one of the highest relative species densities of mosquitoes anywhere in the world (Foley et al. 2008). Understanding the biology, ecology and distribution of this group is thus of primary importance.
+
+French Guiana (83,534 km²) is a French overseas region situated in South America at the eastern limit of the Guiana Shield. The latter is a mountainous tableland extending, from West to East, across Guyana, Suriname, French Guiana, as well as parts of Colombia, Venezuela and Brazil. French Guiana is mainly covered by primary rainforest and its inhabitants (ca. 250,000) are mostly distributed along the coast (Gond et al. 2011). While some evidence suggests that the Guiana Shield could be an early center of speciation for mosquitoes in the Neotropics (Navarro et al. 2007), the mechanisms explaining the high mosquito diversity in the region remain poorly understood.
+
+Our goal is to provide data on Guianese mosquitoes and to make available a fast and efficient tool for sharing and tracking reliable information on specimens in the form of an online database. This work is an ongoing process and should help to understand mosquito distribution across French Guiana. This database will also be used to disseminate biodiversity information related to future studies in medical entomology, ecology and on mosquito distribution in French Guiana. We aim to promote the best practices for recording and sharing biodiversity data within our research community, and highly encourage foreign institutions to do the same.</para>
+  </purpose>
+  <maintenance>
+    <description>
+      <para></para>
+    </description>
+    <maintenanceUpdateFrequency>unkown</maintenanceUpdateFrequency>
+  </maintenance>
+
+      <contact>
+    <individualName>
+        <givenName>Stanislas</givenName>
+      <surName>Talaga</surName>
+    </individualName>
+    <organizationName>CNRS; Laboratoire Ecologie des Forêts de Guyane (Ecofog; UMR-CNRS 8172)</organizationName>
+    <positionName>PhD student</positionName>
+    <address>
+        <deliveryPoint>Campus agronomique</deliveryPoint>
+        <city>Kourou</city>
+        <postalCode>97310</postalCode>
+        <country>GF</country>
+    </address>
+    <electronicMailAddress>stantalaga@free.fr</electronicMailAddress>
+      </contact>
+  <methods>
+        <methodStep>
+          <description>
+            <para>Whenever possible, samples were brought back alive to the laboratory. Immature mosquitoes were individually reared in 2 mL Eppendorf tubes and placed in a climatic chamber at 28°C to obtain adults. When a sufficient number of adults was obtained, some of them were stored in individual tubes containing 95% ethanol. Fourth instar and pupal skins were also sorted and stored in individual tubes containing 70% ethanol. Laboratory-reared adults and adults issued from field capture were killed by freezing. Three legs from the right side of each specimen were then carefully dissected and kept in a separate vial containing 95% ethanol and stored at -20°C for further molecular investigations. Adults were mounted on their right side on a pin point attached to a No. 3 stainless steel insect pin and stored in entomological boxes. Specimen codes are based on the name of the collection followed by a unique serial number as proposed by Gaffigan and Pecor (1997). The same code was used for all of the biological material issued from the same specimen. When it was impossible to bring live samples back to the laboratory and rearing was also not possible, specimens were stored directly in the field in 95% ethanol.
+
+Selected specimens were photographed using a Leica DFC450 camera mounted on a Leica MZ16 macroscope under a light dome simulating natural light. Images were Z-staked using the Leica LAS Z-staking module. Montage pictures and collecting information for each specimen are stored in an online Voseq database (Peña and Malm 2012) managed by the EDB laboratory and viewable through the Guyanensis GIS web platform at http://guyanensis.ups-tlse.fr, through the Global Biodiversity Information Facility (GBIF) at .http://www.gbif.org/dataset/5a8aa2ad-261c-4f61-a98e-26dd752fe1c5 or alternatively through the local Integrated Publishing Toolkit (IPT) at http://130.120.204.55:8080/ipt/resource.do?r=mosquitoes_of_french_guiana. Specimens are initially curated at the Ecofog laboratory by Stanislas Talaga and can be deposited in museums for further taxonomic study.</para>
+          </description>
+        </methodStep>
+      <sampling>
+        <studyExtent>
+          <description>
+            <para>Study sites were located throughout French Guiana.</para>
+          </description>
+        </studyExtent>
+        <samplingDescription>
+          <para>The following techniques were used; however, not all techniques were used at every collecting site and the sampling design may not have been similar between these sites.
+
+Immature container mosquitoes were collected by extracting plant-held water using a great variety of sucking devices in order to fit the great variety of plant structures and water volumes. On some occasions, natural and artificial ovitraps were used, including bamboo stumps and artificial bromeliads installed at ground or canopy level. Immature mosquitoes from larger bodies of water were collected by using a kick net. Adult mosquitoes were attracted in the field by human bait and captured with a butterfly net or with a tube when they alighted.</para>
+        </samplingDescription>
+      </sampling>
+      <qualityControl>
+        <description>
+          <para>GPS coordinates were obtained using a GPSmap 60CSx device or equivalent. Considering different sources of GPS errors (such as ionosphere delay and signal multipath), we estimate the accuracy of the coordinates to be around 30 meters at a 95% confidence level.</para>
+        </description>
+      </qualityControl>
+  </methods>
+  <project >
+    <title>Online database for mosquito (Diptera, Culicidae) occurrence records in French Guiana</title>
+      <personnel>
+        <individualName>
+            <givenName>Stanislas</givenName>
+          <surName>Talaga</surName>
+        </individualName>
+        <role>author</role>
+      </personnel>
+      <funding>
+        <para>Data for this resource have been obtained within the framework of grants Data for this resource have been obtained within the framework of the projects BIOHOPSYS and DIADEMA from the CEBA (CEnter for the study of Biodiversity in Amazonia) and thanks to a PhD fellowship from the Université Antilles-Guyane awarded to Stanislas Talaga. CEBA is funded by an Investissement d&apos;Avenir grant managed by the French Agence Nationale de la Recherche (ANR) under grant number ANR-10-LABX-25-CEBA.</para>
+      </funding>
+      <studyAreaDescription>
+        <descriptor name="generic"
+                    citableClassificationSystem="false">
+          <descriptorValue>Collecting trips were conducted in various locations throughout French Guiana ranging from urban to pristine environments.</descriptorValue>
+        </descriptor>
+      </studyAreaDescription>
+      <designDescription>
+        <description>
+          <para>This database was originally built from studies on mosquito-phytotelm associations at the scale of French Guiana. Immature mosquitoes were collected from at least 30 water-holding structures per phytotelm species, per locality. However, the extent of the sampling area was not standardized between the different localities. The database also contains some circumstantial samplings of immature and adult mosquitoes conducted by the first author.</para>
+        </description>
+      </designDescription>
+  </project>
+</dataset>
+  <additionalMetadata>
+    <metadata>
+      <gbif>
+          <dateStamp>2014-12-10T01:27:57.246+01:00</dateStamp>
+          <hierarchyLevel>dataset</hierarchyLevel>
+          <bibliography>
+                <citation>Belkin JN, Schick RX, Heinemann SJ (1971) Mosquito studies (Diptera, Culicidae). XXV. Mosquitoes originally described from Brazil. Contributions to the American Entomological Institute 7 (5): 1-64.</citation>
+                <citation>Chippaux JP, Pajot FX (1983) Liste des arthropodes de Guyane française ectoparasites, source d&apos;envenimation ou vecteurs prouvés ou présomptifs d&apos;agents pathogènes pour l&apos;homme. In: Chippaux JP, Dedet JP, Gentile B, Pajot FX, Planquette P, Pradinaud R, Robin Y (1983) Facteurs biotiques intervenant dans la santé en Guyane : liste des agents pathogènes et des animaux vecteurs, réservoirs et sources de nuisance. Cayenne: ORSTOM; Institut Pasteur de Guyane, p. 22-38.</citation>
+                <citation>Clements AN (2012) The Biology of mosquitoes, Volume 3 Transmission of viruses and interactions with bacteria, Cabi, London, UK, 592 pp.</citation>
+                <citation>Foley DH, Weitzman AL, Miller SE, Faran ME, Rueda LM, Wilkerson RC (2008) The value of georeferenced collection records for predicting patterns of mosquito species richness and endemism in the Neotropics. Ecological Entomolology 33 (1): 12-23.</citation>
+                <citation>Gaffigan T, Pecor J. (1997) Collecting, rearing, mounting and shipping mosquitoes, http://wrbu.si.edu/techniques.html.</citation>
+                <citation>Gond V, Freycon V, Molino JF, Brunaux O, Ingrassia F, Joubert P, Pekel JF, Prévost MF, Thierron V, Trombec PJ, Sabatier D (2011) Broad-scale spatial pattern of forest landscape types in the Guiana Shield. International Journal of Applied Earth Observation and Geoinformation 13 (3): 357-367.</citation>
+                <citation>Harbach RE (2015) Mosquito Taxonomic Inventory, http://mosquito–taxonomic–inventory.info/, (accessed 15 Feb. 2015).</citation>
+                <citation>Harbach RE, Peyton EL (2000) Systematics of Onirion, a new genus of Sabethini (Diptera: Culicidae) from the Neotropical Region. Bulletin of the Natural History Museum, London (Entomology) 69 (2): 115-169.</citation>
+                <citation>Motta MA, Lourenco-de-Oliveira R (2000) The Subgenus Dendromyia Theobald: A Review with redescriptions of Four Species (Diptera: Culicidae). Memórias do Instituto Oswaldo Cruz 95 (5): 649-683.</citation>
+                <citation>Navarro JC, Liria J, Pinango H, Barrera R (2007) Biogeographic area relationships in Venezuela: A Parsimony analysis of Culicidae-Phytotelmata distribution in National Parks. Zootaxa 1547: 1-19.</citation>
+                <citation>Talaga S, Dejean A, Carinci R, Gaborit P, Dusfour I, Girod R (2015) Updated Checklist of the Mosquitoes (Diptera: Culicidae) of French Guiana. Journal of Medical Entomology doi: 10.1093/jme/tjv109.</citation>
+                <citation>Zavortink TJ (1979) Mosquito studies (Diptera, Culicidae) XXXV. The new sabethine genus Johnbelkinia and a preliminary reclassification of the composite genus Trichoprosopon. Contributions of the American Entomological Institute 17 (1): 1-61.</citation>
+          </bibliography>
+              <collection>
+                  <parentCollectionIdentifier>Not applicable</parentCollectionIdentifier>
+                  <collectionIdentifier>http://130.120.204.55:8080/ipt/resource.do?r=mosquitoes_of_french_guiana</collectionIdentifier>
+                <collectionName>Mosquitoes_of_French_Guiana</collectionName>
+              </collection>
+                <specimenPreservationMethod>alcohol</specimenPreservationMethod>
+              <livingTimePeriod>2013-present</livingTimePeriod>
+          <dc:replaces>5a8aa2ad-261c-4f61-a98e-26dd752fe1c5/v25.1.xml</dc:replaces>
+      </gbif>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>
