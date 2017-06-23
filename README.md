@@ -29,11 +29,11 @@ Miraldo, A., Li, S., Borregaard, M. K., Florez-Rodriguez, A., Gopalakrishnan, S.
 
 ## Time slicing GenBank
 
-Notes on how to get GenBank sequences from a given time interval and with particular fields (such as coordinates).
+Notes on how to get GenBank sequences from a given time interval and with particular fields (such as coordinates). See https://www.ncbi.nlm.nih.gov/books/NBK49540/ for list of NCBI search terms.
 
 ### Time period
 
-NCBI recognises several types of date, such as **datetype=pdat** is publication date, **datetype=mdat** is revise date.
+NCBI recognises several types of date, such as **datetype=pdat** is publication date, **datetype=mdat** is revised date.
 
 ### Georeferenced sequences
 
