@@ -234,6 +234,9 @@ function Tree()
 	this.add_there = null;
 	this.curnode = null;
 	
+	this.line = [];
+	this.html = [];
+	
 	this.error = 0;
 }
 
@@ -601,6 +604,75 @@ Tree.prototype.WriteNewick = function()
 	
 	//console.log(newick);
 }
+
+	Tree.prototype.compresstraverse = function(p) {
+		if (p) {
+			q = p.ancestor;
+			
+			console.log(p.weight);
+			
+			var start = this.num_leaves - q.weight;
+			var stop  = this.num_leaves - p.weight;
+			var symbol = '';
+			
+			for (var i = start + 1; i < stop; i++) {
+				this.line[i] = '─';
+			}	
+			
+			if (p == q.child) {
+				if (q == this.root) {
+					symbol = '┌'; // ROOT
+				} else {
+					symbol = '┬'; // DOWN
+				}
+			} else {
+				if (p.sibling) {
+					symbol = '├'; // SIB
+				} else {
+					symbol = '└'; // BOT
+				}
+				
+				// We need to fill in any vertical branches
+				// below (i.e. to the left) of p. Such lines only exist
+				// if an ancestor of p's immediate ancestor has siblings.
+				while (q && (q != this.root)) {
+					if (q.sibling) {
+						var pos = this.num_leaves - q.ancestor.weight;
+						this.line[pos] = '│'; // VBAR;
+					}
+					q = q.ancestor;
+				}
+			}	
+			
+			this.line[start] = symbol;
+		
+			// If p is a leaf then we output the line buffer
+			if (p.IsLeaf()) {
+				this.html.push(this.line.join('') + ' ' + p.label);
+				for (var i = 0; i < this.num_leaves; i++) {
+					this.line[i] = ' ';
+				}			
+			}
+			  
+			// Traverse the rest of the tree
+			this.compresstraverse (p.child);
+			this.compresstraverse (p.sibling);
+		}
+	}
+
+
+	Tree.prototype.CompressDraw = function() {
+		this.html = [];
+		for (var i = 0; i < this.num_leaves; i++) {
+			this.line[i] = ' ';
+		}
+		
+		this.compresstraverse(this.root.child);
+		
+		return this.html;
+	}
+
+
 
 
 //--------------------------------------------------------------------------------------------------

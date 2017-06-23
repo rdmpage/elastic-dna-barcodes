@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<div id="output" style="font-family: monospace;white-space: pre;line-height: 90%;">
+</div>
+
 <div width="100%">
 	<svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" height="500" width="500">
 		<g id="viewport">
@@ -481,6 +484,18 @@ newick = '(((FFMBH16914_Chondrostoma_soetta,FFMBH09614_Chondrostoma_soetta):8.27
 
 
 showtree('svg', newick);
+
+    var t = new Tree();
+	t.Parse(newick);
+	
+	t.ComputeWeights(t.root);
+	
+	var a = t.CompressDraw();
+	
+	document.getElementById('output').innerHTML = a.join("<br/>");
+	
+	
+
 
 </script>
 
