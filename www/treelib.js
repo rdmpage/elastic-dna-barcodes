@@ -179,6 +179,8 @@ function Node(label)
 	this.path_length = 0.0;
 	this.depth = 0;
 	
+	this.marked = false;
+	
 	this.data = {};
 	
 }
@@ -201,6 +203,24 @@ Node.prototype.GetRightMostSibling = function()
 }
 
 //--------------------------------------------------------------------------------------------------
+Node.prototype.GetDegree = function() 
+{
+	var degree = 0;
+	var p = this;
+	if (p.child) {
+		degree++;
+		
+		p = p.child;
+		while (p.sibling)
+		{
+			degree++;
+			p = p.sibling;
+		}
+	}
+	return degree;
+}
+
+//--------------------------------------------------------------------------------------------------
 function Tree()
 {
 	this.root = null;
@@ -210,6 +230,10 @@ function Tree()
 	this.nodes = [];
 	this.rooted = true;
 	this.has_edge_lengths = false;
+	
+	this.add_there = null;
+	this.curnode = null;
+	
 	this.error = 0;
 }
 
@@ -249,8 +273,8 @@ Tree.prototype.Parse = function(str)
 	
 	var token = str.split("|");
 	
-	var curnode = this.NewNode();
-	this.root = curnode;
+	this.curnode = this.NewNode();
+	this.root = this.curnode;
 	
 	var state = 0;
 	var stack = [];
@@ -271,8 +295,8 @@ Tree.prototype.Parse = function(str)
 					
 					// to do: KML
 					
-					curnode.label = label;
-					this.label_to_node_map[label] = curnode;
+					this.curnode.label = label;
+					this.label_to_node_map[label] = this.curnode;
 					
 					i++;
 					state = 1;
@@ -289,8 +313,8 @@ Tree.prototype.Parse = function(str)
 						// to do: KML
 						
 				
-						curnode.label = label;
-						this.label_to_node_map[label] = curnode;
+						this.curnode.label = label;
+						this.label_to_node_map[label] = this.curnode;
 
 						i++;
 						state = 1;
@@ -336,7 +360,7 @@ Tree.prototype.Parse = function(str)
 						i++;
 						if (isNumber(token[i]))
 						{
-							curnode.edge_length = parseFloat(token[i]);
+							this.curnode.edge_length = parseFloat(token[i]);
 							this.has_edge_lengths = true;
 							i++;
 						}
@@ -344,7 +368,7 @@ Tree.prototype.Parse = function(str)
 						
 					case ',':
 						q = this.NewNode();
-						curnode.sibling = q;
+						this.curnode.sibling = q;
 						var c = stack.length;
 						if (c == 0)
 						{
@@ -354,18 +378,18 @@ Tree.prototype.Parse = function(str)
 						else
 						{
 							q.ancestor = stack[c - 1];
-							curnode = q;
+							this.curnode = q;
 							state = 0;
 							i++;
 						}
 						break;	
 						
 					case '(':
-						stack.push(curnode);
+						stack.push(this.curnode);
 						q = this.NewNode();
-						curnode.child = q;
-						q.ancestor = curnode;
-						curnode = q;
+						this.curnode.child = q;
+						q.ancestor = this.curnode;
+						this.curnode = q;
 						state = 0;
 						i++;
 						break;
@@ -378,7 +402,7 @@ Tree.prototype.Parse = function(str)
 						}
 						else
 						{
-							curnode = stack.pop();
+							this.curnode = stack.pop();
 							state = 3;
 							i++;
 						}
@@ -406,8 +430,8 @@ Tree.prototype.Parse = function(str)
 			case 3: // finishchildren
 				if (ctype_alnum(token[i].charAt(0)))
 				{
-					curnode.label = token[i];
-					this.label_to_node_map[token[i]] = curnode;
+					this.curnode.label = token[i];
+					this.label_to_node_map[token[i]] = this.curnode;
 					i++;
 				}
 				else
@@ -418,7 +442,7 @@ Tree.prototype.Parse = function(str)
 							i++;
 							if (isNumber(token[i]))
 							{
-								curnode.edge_length = parseFloat(token[i]);
+								this.curnode.edge_length = parseFloat(token[i]);
 								this.has_edge_lengths = true;
 								i++;
 							}
@@ -432,14 +456,14 @@ Tree.prototype.Parse = function(str)
 							}
 							else
 							{
-								curnode = stack.pop();
+								this.curnode = stack.pop();
 								i++;
 							}
 							break;
 							
 						case ',':
 							q = this.NewNode();
-							curnode.sibling = q;
+							this.curnode.sibling = q;
 							
 							if (stack.length == 0)
 							{
@@ -449,7 +473,7 @@ Tree.prototype.Parse = function(str)
 							else
 							{
 								q.ancestor = stack[stack.length - 1];
-								curnode = q;
+								this.curnode = q;
 								state = 0;
 								i++;
 							}
@@ -518,38 +542,42 @@ Tree.prototype.WriteNewick = function()
 	var newick = '';
 	
 	var stack = [];
-	var curnode = this.root;
+	this.curnode = this.root;
 	
-	while (curnode)
+	//if (typeof label !== undefined)	
+	
+	
+	
+	while (this.curnode)
 	{
-		//console.log(curnode.label);
-		if (curnode.child)
+		//console.log(this.curnode.label);
+		if (this.curnode.child)
 		{
 			newick += '(';
-			stack.push(curnode);
-			curnode = curnode.child;
+			stack.push(this.curnode);
+			this.curnode = this.curnode.child;
 		}
 		else
 		{
-			newick += curnode.label;
-			var length = curnode.edge_length;
+			newick += this.curnode.label;
+			var length = this.curnode.edge_length;
 			if (length)
 			{
 				newick += ':' + length;
 			}
 			
-			while (stack.length > 0 && curnode.sibling == null)
+			while (stack.length > 0 && this.curnode.sibling == null)
 			{
 				newick += ')';
-				curnode = stack.pop();
+				this.curnode = stack.pop();
 				
 				// internal node label and length
-				if (typeof curnode.label !== undefined)
+				if (typeof this.curnode.label !== undefined)
 				{
-					newick += curnode.label;
+					newick += this.curnode.label;
 				}
 				
-				var length = curnode.edge_length;
+				var length = this.curnode.edge_length;
 				if (length)
 				{
 					newick += ':' + length;
@@ -558,12 +586,12 @@ Tree.prototype.WriteNewick = function()
 			
 			if (stack.length == 0)
 			{
-				curnode = null;
+				this.curnode = null;
 			}
 			else
 			{
 				newick += ',';
-				curnode = curnode.sibling;
+				this.curnode = this.curnode.sibling;
 			}
 		}
 	}
