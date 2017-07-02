@@ -68,7 +68,29 @@ One month slice of all sequences with country but no lat_lon
 
 https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term=ddbj embl genbank with limits[filt] NOT transcriptome[All Fields] NOT mRNA[filt] NOT TSA[All Fields] NOT scaffold[All Fields] AND src country[prop] NOT src lat lon[prop] AND 2017/01:2017/01/31[pdat]&retmax=1000
 
-Sequences with *country* but now *lat_lon* are candidates for georeferencing.
+Sequences with *country* but not *lat_lon* are candidates for georeferencing.
+
+### Restrict to taxonomic groups (GenBank divisions)
+
+Add DIV as parameter *AND gbdiv_inv[PROP] AND srcdb_genbank[PROP]* (https://www.ncbi.nlm.nih.gov/books/NBK49540/ says we need *srcdb_genbank[PROP]*. The divisions are:
+
+```
+BCT	Bacterial sequences
+PRI	Primate sequences
+ROD	Rodent sequences
+MAM	Other mammalian sequences
+VRT	Other vertebrate sequences
+INV	Invertebrate sequences
+PLN	Plant and Fungal sequences
+VRL	Viral sequences
+PHG	Phage sequences
+RNA	Structural RNA sequences
+SYN	Synthetic and chimeric sequences
+UNA	Unannotated sequences
+```
+
+Source: https://www.ncbi.nlm.nih.gov/genbank/htgs/divisions/
+ 
 
 
 ### Examples
