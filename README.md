@@ -154,5 +154,13 @@ Gratton, P., Marta, S., Bocksberger, G., Winter, M., Trucchi, E., & Kühl, H. (2
 
 Miraldo, A., Li, S., Borregaard, M. K., Florez-Rodriguez, A., Gopalakrishnan, S., Rizvanovic, M., … Nogues-Bravo, D. (2016, September 29). An Anthropocene map of genetic diversity. Science. American Association for the Advancement of Science (AAAS). https://doi.org/10.1126/science.aaf4381
 
+AMIA Jt Summits Transl Sci Proc. 2014; 2014: 102–111.
+Published online 2014 Apr 7.
+PMCID: [PMC4333696](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4333696/)
+Natural Language Processing Methods for Enhancing Geographic Metadata for Phylogeography of Zoonotic Viruses
+Tasnia Tahsin,1 Rachel Beard,1 Robert Rivera,1 Rob Lauder,1 Garrick Wallstrom, PhD,1 Matthew Scotch, PhD, MPH,1 and Graciela Gonzalez, PhD1
+
+Weissenbacher, D., Tahsin, T., Beard, R., Figaro, M., Rivera, R., Scotch, M., & Gonzalez, G. (2015). Knowledge-driven geospatial location resolution for phylogeographic models of virus migration. Bioinformatics, 31(12), i348–i356. https://10.1093/bioinformatics/btv259
+
 Yang, K., & Zhang, L. (2008, January 10). Performance comparison between k-tuple distance and four model-based distances in phylogenetic tree reconstruction. Nucleic Acids Research. Oxford University Press (OUP). https://doi.org/10.1093/nar/gkn075
 
