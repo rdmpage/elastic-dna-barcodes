@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	
+	<script src="treelib.js"></script>
+	
+    <!-- leaflet -->
+	<link rel="stylesheet" href="leaflet-0.7.3/leaflet.css" />
+	<script src="leaflet-0.7.3/leaflet.js" type="text/javascript"></script>	
+	
+	<link rel="stylesheet" href="leaflet.draw/leaflet.draw.css"/>
+	<script src="leaflet.draw/leaflet.draw.js" type="text/javascript"></script>	
+
+
+	<script>
+		var map;
+		var geojson = null;
+	
+		function onEachFeature(feature, layer) {
+			// does this feature have a property named popupContent?
+			if (feature.properties && feature.properties.popupContent) {
+				layer.bindPopup(feature.properties.popupContent);
+			}
+		}	
+    	
+    	
+    	function create_map() {   	
+			map = L.map('map', { center: [0,0], zoom: 4 } );
+
+			// create the tile layer with correct attribution
+			var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+			var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+			var osm = new L.TileLayer(osmUrl, {minZoom: 1, maxZoom: 12, attribution: osmAttrib});	
+			
+			//map.setView(new L.LatLng(0, 0),4);
+			map.addLayer(osm);	
+	
+			L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+				id: 'positron'
+			}).addTo(map);
+
+		}
+		
+		function add_data(data) {
+		    if (geojson) {
+		    	map.removeLayer(geojson);
+		    }
+			
+			geojson = L.geoJson(data, { 
+			style: function (feature) {
+				return feature.properties && feature.properties.style;
+			},
+			onEachFeature: onEachFeature,
+			}).addTo(map);
+			
+     var southWest = L.latLng(data.bbox[1], data.bbox[0]),
+    	northEast = L.latLng(data.bbox[3], data.bbox[2]),
+    	bounds = L.latLngBounds(southWest, northEast);	
+    	map.fitBounds(bounds);		
+		
+		
+		}
+		
+	</script>		
+			
+	
+</head>
+<body>
+
+<div id="map" style="width:100%; height:300px;"></div>	
+
+<div id="output" style="font-family: monospace;white-space: pre;line-height: 90%;">
+</div>
+
+<div width="100%">
+	<svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" height="500" width="500">
+		<g id="viewport">
+		</g>
+	</svg>
+</div>
+
+
+<script>
+
+create_map();
+
+/*
+var j = {
+    "type": "Point",
+    "coordinates": [
+        -105.01621,
+        39.57422
+    ]
+};
+add_data(j);
+*/
+
+var counter = 0;
+
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.FirstDescendant = function(p) {
+	this.curnode = p.child;
+	return this.curnode;
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.NextDescendant = function() {
+	this.curnode = this.curnode.sibling;
+	return this.curnode;
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.NextNonOGDescendant = function() {
+	var q = this.NextDescendant();
+	var done = false;
+	while (!done) {
+		if (!q) {
+			done = true;
+		}
+		if (!done) {
+			done = !q.marked;
+		}
+		if (!done) {
+			q = this.NextDescendant();
+		}
+	}
+	return q;
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.MarkPath = function(p) {
+	var q = p;
+	while (q) {
+		q.marked = true;
+		q = q.ancestor;
+	} 
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.UnMarkPath = function(p) {
+	var q = p;
+	while (q) {
+		q.marked = false;
+		q = q.ancestor;
+	} 
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.ListOtherDesc = function(p) {
+	var q = this.FirstDescendant(p);
+	if (q.marked) {
+		q = this.NextNonOGDescendant();
+	}
+	
+	console.log("NextNonOGDescendant=" + q.label);
+	
+	/*
+	if (this.add_there.IsLeaf() || this.add_there.child) {
+		this.add_there.sibling = q;
+		q.ancestor = this.add_there.ancestor;
+	} else {
+		this.add_there.child = q;
+		q.ancestor = this.add_there;
+	}
+	*/
+	
+	if (p != this.root) {
+		this.add_there.child = q;
+		q.ancestor = this.add_there;
+	} else {
+		this.add_there.sibling = q;
+		q.ancestor = this.add_there.ancestor;
+	}
+	
+	this.add_there = q;
+	console.log("q add_there=" + this.add_there.label);
+
+	q = this.NextNonOGDescendant();
+	while (q) {
+	
+		console.log("NextNonOGDescendant=" + q.label);
+	
+		this.add_there.sibling = q;
+		q.ancestor = this.add_there.ancestor;
+		this.add_there = q;
+		q = this.NextNonOGDescendant();
+	}
+	this.add_there.sibling = null;
+	
+	console.log("ListOtherDesc add_there=" + this.add_there.label);
+}
+
+//----------------------------------------------------------------------------------------
+Tree.prototype.ReRoot = function(outgroup, ingroup_edge, outgroup_edge) {
+	if (!outgroup || (outgroup == this.root)) {
+		return;
+	}
+	
+	if (outgroup.ancestor == this.root) {
+	
+		// if tree had no branch lengths we'd ignore this case, but
+		// for midpoint we may need to adjust edge lengths
+		
+		var ingroup = this.root.child;
+		if (ingroup == outgroup) {
+			ingroup = this.root.child.sibling;
+		}
+		
+		ingroup.edge_length = ingroup_edge;
+		outgroup.edge_length = outgroup_edge;
+	
+		return;
+	}
+	
+	this.MarkPath(outgroup);
+
+	var ingroup = new Node('ingroup');
+	ingroup.ancestor = outgroup.ancestor;
+	
+	this.add_there = ingroup;
+	var q = outgroup.ancestor;
+	
+	// Split outgroup edge length among out and ingroup (does this require things to be binary?)
+	//var half = outgroup.edge_length/2.0;
+	ingroup.edge_length = ingroup_edge;
+	outgroup.edge_length = outgroup_edge;
+	
+	while (q) {
+		console.log("ReRoot q=" + q.label);
+	
+		console.log('into ListOtherDesc');
+		this.ListOtherDesc(q);
+		console.log('outof ListOtherDesc');
+		
+		var previous_q = q;
+		q = q.ancestor;
+		
+		if (q && (q != this.root)) {
+			var p = new Node('x' + counter++);
+			this.add_there.sibling = p;
+			p.ancestor = this.add_there.ancestor;
+			
+			p.edge_length = previous_q.edge_length;
+			p.label = previous_q.label;
+			
+			this.add_there = p;
+		}
+	}
+	
+	outgroup.ancestor.child = outgroup;
+	outgroup.sibling = ingroup;
+	this.root = outgroup.ancestor;
+	
+	// cleanup
+	/*
+	q = Root->GetAnc();
+	while (q != NULL)
+	{
+		NodePtr p = q;
+		q = q->GetAnc ();
+		delete p;
+	}
+	*/
+	
+	this.root.ancestor = null;
+	this.root.sibling = null;
+
+	this.root.marked = false;
+	outgroup.marked = false;
+
+}
+
+
+
+//--------------------------------------------------------------------------------------------------
+GeoTreeDrawer.prototype = new PhylogramTreeDrawer();
+
+function GeoTreeDrawer()
+{
+	PhylogramTreeDrawer.apply(this, arguments);
+};
+
+//--------------------------------------------------------------------------------------------------
+GeoTreeDrawer.prototype.DrawLeaf = function(p)
+{
+	var p0 = p.xy
+	var p1 = [];
+	var anc = p.ancestor;
+	if (anc)
+	{
+		p1['x'] = p.backarc['x'];
+		p1['y'] = p.backarc['y'];
+						
+		drawLine(this.settings.svg_id, p0, p1);		
+	}
+}
+
+//--------------------------------------------------------------------------------------------------
+GeoTreeDrawer.prototype.DrawInternal = function(p)
+{
+	var p0 = [];
+	var p1 = [];
+	
+	p0['x'] = p.xy['x'];
+	p0['y'] = p.xy['y'];
+		
+	var anc = p.ancestor;
+	if (anc)
+	{
+		p1['x'] = anc.xy['x'];
+		p1['y'] = p0['y'];
+		
+		drawLine(this.settings.svg_id, p0, p1);
+	}
+	
+	// vertical line
+	p0['x'] = p0['x'];
+	p0['y'] = p.child.backarc['y'];
+	p1['x'] = p0['x'];
+	p1['y'] = p.child.GetRightMostSibling().backarc['y'];
+		
+	drawLine(this.settings.svg_id, p0, p1);
+}
+
+//--------------------------------------------------------------------------------------------------
+GeoTreeDrawer.prototype.CalcInternal = function(p)
+{
+	var pt = [];
+	pt['x'] = this.left + (p.path_length / this.max_path_length) * this.settings.width;
+	
+	var pl = p.child.xy;
+	var pr = p.child.GetRightMostSibling().xy; 
+	
+	pt['y'] = pl['y'] + (pr['y'] - pl['y'])/2;
+	p.xy['x'] = pt['x'];
+	p.xy['y'] = pt['y'];
+		
+	// back arcs	
+	var child = p.child;
+	while (child) {
+		child.backarc['x'] = pt['x'];
+		child.backarc['y'] = child.xy['y'];
+		child = child.sibling;
+	}	
+}
+
+
+
+//----------------------------------------------------------------------------------------
+function showtree(element_id, newick)
+{
+    var t = new Tree();
+    var element = document.getElementById(element_id);
+	t.Parse(newick);
+
+	if (t.error != 0)
+	{
+		//document.getElementById('message').innerHTML='Error parsing tree';
+	}
+	else
+	{
+		// rooting experiments
+		
+		console.log('tree at start=' + t.WriteNewick());
+		
+		var r = 'd';
+		r='e';
+		//r = 'GBCL1590713';
+		r = 'x';
+		r='';
+		
+		var outgroup = null;
+		var ingroup_edge = 0.0;
+		var outgroup_edge = 0.0;
+		
+		{
+			var counter = 0;
+			var leaf_list = [];
+			var n = new NodeIterator(t.root);
+			var q = n.Begin();
+			while (q != null)
+			{
+				if (q.IsLeaf())
+				{
+					leaf_list[counter++] = q;
+				}
+				q = n.Next();
+			}
+			
+			// get max pairwise distance
+			var max_pairwise = 0.0;
+			var from = -1;
+			var to = -1;
+			
+			for (var i = 1; i < counter; i++) {
+				for (var j = 0; j < i; j++) {
+					var p = leaf_list[i];
+					var q = leaf_list[j];
+					
+					t.MarkPath(p);
+					
+					var sum = 0.0;
+					while (q && !q.marked) {
+						sum += q.edge_length;
+						q = q.ancestor;
+					}
+					
+					while (p != q) {
+						sum += p.edge_length;
+						p = p.ancestor;
+					}
+					
+					t.UnMarkPath(leaf_list[i]);
+					
+					if (sum > max_pairwise) {
+						from = leaf_list[i];
+						to = leaf_list[j];
+						max_pairwise = sum;
+					}
+				}
+			}	
+			
+			
+			console.log("max_pairwise=" + max_pairwise + "[" + from.label + "," + to.label + "]");
+			
+			// where to split?
+			var half = max_pairwise/2.0;
+			
+			outgroup = null;
+			var path = 0.0;
+			
+			var path2 = 0.0;
+			
+			while ((path < half) && from) {
+				path2 = path;
+				path += from.edge_length;
+				outgroup = from;
+				from = from.ancestor;
+			}
+			
+			
+			if (path < half) {
+				path = 0.0;
+				path2 = 0.0;
+				while ((path < half) && to) {
+					path2 = path;
+					path += to.edge_length;
+					outgroup = to;
+					to = to.ancestor;
+				}
+			}
+			
+			{
+				var extra = path - half;
+				outgroup_edge = path - path2 - extra;
+				ingroup_edge = extra;
+			}
+			
+
+			
+		}
+		
+		//var outgroup = t.label_to_node_map['95107171'];
+		
+		if (outgroup) {
+		
+			outgroup.label = 'OUTGROUP';
+		
+			console.log("outgroup=" + outgroup.label);
+			
+			console.log('ingroup_edge=' + ingroup_edge + ', outgroup_edge=' + outgroup_edge);
+		
+			t.ReRoot(outgroup, ingroup_edge, outgroup_edge);
+		
+			console.log('tree at end=' + t.WriteNewick());
+		}
+	
+		//document.getElementById('message').innerHTML='Parsed OK';
+				
+		t.ComputeWeights(t.root);
+		
+		var td = null;
+		
+		var drawing_type = 'geo';
+		
+		switch (drawing_type)
+		{
+			case 'rectanglecladogram':
+				td = new RectangleTreeDrawer();
+				break;
+		
+			case 'phylogram':
+				if (t.has_edge_lengths)
+				{
+					td = new PhylogramTreeDrawer();
+				}
+				else
+				{
+					td = new RectangleTreeDrawer();
+				}
+				break;
+				
+			case 'geo':
+				td = new GeoTreeDrawer();
+				break;
+				
+				
+			case 'circle':
+				td = new CircleTreeDrawer();
+				break;
+				
+			case 'circlephylogram':
+				if (t.has_edge_lengths)
+				{
+					td = new CirclePhylogramDrawer();
+				}
+				else
+				{
+					td = new CircleTreeDrawer();
+				}
+				break;
+				
+			case 'cladogram':
+			default:
+				td = new TreeDrawer();
+				break;
+		}
+		
+		// clear existing diagram, if any
+		var svg = document.getElementById('svg');
+		while (svg.hasChildNodes()) 
+		{
+			svg.removeChild(svg.lastChild);
+		}
+		
+		var g = document.createElementNS('http://www.w3.org/2000/svg','g');
+		g.setAttribute('id','viewport');
+		svg.appendChild(g);
+				
+		td.Init(t, {svg_id: 'viewport', width:500, height:500, fontHeight:10, root_length:0.1} );
+		
+		td.CalcCoordinates();
+		td.Draw();
+		
+		// font size
+		var cssStyle = document.createElementNS('http://www.w3.org/2000/svg','style');
+		cssStyle.setAttribute('type','text/css');
+		
+		var font_size = Math.floor(td.settings.height/t.num_leaves);
+		font_size = Math.max(font_size, 1);
+		
+		var style=document.createTextNode("text{font-size:" + font_size + "px;}");
+		cssStyle.appendChild(style);
+		
+		svg.appendChild(cssStyle);
+
+		// label leaves...
+		var n = new NodeIterator(t.root);
+		var q = n.Begin();
+		while (q != null)
+		{
+			if (q.IsLeaf())
+			{
+				switch (drawing_type)
+				{
+					case 'circle':
+					case 'circlephylogram':
+						var align = 'left';
+						var angle = q.angle * 180.0/Math.PI;
+						if ((q.angle > Math.PI/2.0) && (q.angle < 1.5 * Math.PI))
+						{
+							align = 'right';
+							angle += 180.0;
+						}
+						drawRotatedText('viewport', q.xy, q.label, angle, align)
+						break;
+				
+					case 'cladogram':
+					case 'rectanglecladogram':
+					case 'phylogram':
+					default:				
+						drawText('viewport', q.xy, q.label);
+						break;
+				}
+			}
+			q = n.Next();
+		}
+	
+		// Scale to fit window
+		var bbox = svg.getBBox();
+		
+		var scale = Math.min(td.settings.width/bbox.width, td.settings.height/bbox.height);
+		
+		if ((drawing_type == 'circle') || (drawing_type == 'circlephylogram')) {
+			//scale *= 0.2;
+		} else {
+			scale *= 0.8;
+		}
+		
+		
+		// move drawing to centre of viewport
+		var viewport = document.getElementById('viewport');
+		viewport.setAttribute('transform', 'scale(' + scale + ')');
+		//viewport.setAttribute('transform', 'rotate(-45 200 200)');
+		
+		
+		// centre
+		bbox = svg.getBBox();
+		if (bbox.x < 0)
+		{
+			viewport.setAttribute('transform', 'translate(' + -bbox.x + ' ' + -bbox.y + ') scale(' + scale + ')');
+			
+		}
+	}
+}
+
+
+//----------------------------------------------------------------------------------------
+function GeoLayout() {
+	this.bounds 	= null;
+
+	//this.bounds 	= L.latLngBounds(L.latLng(90, 180), L.latLng(-90,-180));	
+	this.projection = L.Projection.SphericalMercator;
+	
+	this.pts = []; // ?why
+	
+	this.occurrences = [];
+	
+	this.tree = null;
+	this.tree_bounds = null;
+	
+	
+/*
+	var $occurrences = array();
+	var $bounds;
+	
+	var $tree;
+	
+	var $latitude;
+	var $longitude;
+	
+	var $leaf_list = array();
+
+	var $occurrence_list = array();
+	var $occurrence_label_to_order = array();
+	
+	var $mapping_pts = array();
+	
+	var $edges = array();
+	
+	var $bins = array();
+	
+	var $taxa = array();
+	var $taxon_colours = array();
+	var $occurrence_colours = array();
+	
+	var $port = null;
+	
+	var $left_centroid = array();
+	var $bottom_centroid = array();
+	
+	var $tree_canvas_size = 100;
+	var $matching_canvas_size = 0;
+	var $td = null;
+	
+	var $orientation = 0;
+*/
+}
+
+//----------------------------------------------------------------------------------------
+GeoLayout.prototype.x = function() 
+{
+	
+}
+
+//----------------------------------------------------------------------------------------
+// Add an occurrence and adjust bound
+GeoLayout.prototype.AddOccurrence = function(label, latlng) {
+
+	//console.log(label + ' ' + JSON.stringify(latlng));
+
+	//this.pts.push(latlng);
+
+	this.occurrences[label] = latlng;
+	
+	if (!this.bounds) {
+		this.bounds = L.latLngBounds(latlng, latlng);	
+	} else {
+		this.bounds.extend(latlng);
+	}
+	
+	//console.log(label + ' ' + JSON.stringify(this.bounds));
+}
+
+//----------------------------------------------------------------------------------------
+GeoLayout.prototype.DrawTree = function() {
+}
+
+//----------------------------------------------------------------------------------------
+GeoLayout.prototype.GetTreeRect = function() {
+	// compute where we are going to put the tree
+
+	// for now just return occurrence rect
+	this.tree_bounds = this.bounds;
+}
+
+//----------------------------------------------------------------------------------------
+GeoLayout.prototype.PlaceTree = function() {
+}
+
+//----------------------------------------------------------------------------------------
+// Output GeoJSON
+GeoLayout.prototype.dump = function() {
+
+	var j = {};
+	j.type = "FeatureCollection";
+	j.bbox = [];
+	j.features = [];
+	
+	// show occurrences
+	for (var i in this.occurrences) {
+		var feature = {};
+		feature.type = "Feature";
+		feature.geometry = {};
+		feature.geometry.type = "Point";
+		
+		feature.geometry.coordinates = [];
+		feature.geometry.coordinates[0] = this.occurrences[i].lng;
+		feature.geometry.coordinates[1] = this.occurrences[i].lat;
+		
+		feature.properties = {};
+		feature.properties.name = i;
+		feature.properties.popupContent = i;
+		
+		j.features.push(feature);
+	}
+	
+	// draw box around occurrences for debugging
+	var feature = {};
+	feature.type = "Feature";
+	feature.geometry = {};
+	feature.geometry.type = "Polygon";
+	feature.geometry.coordinates = [];
+	feature.geometry.coordinates[0] = [];
+	
+		
+	feature.geometry.coordinates[0][0] = [];
+	feature.geometry.coordinates[0][0][0] = this.bounds.getWest();
+	feature.geometry.coordinates[0][0][1] = this.bounds.getNorth();
+
+	feature.geometry.coordinates[0][1] = [];
+	feature.geometry.coordinates[0][1][0] = this.bounds.getEast();
+	feature.geometry.coordinates[0][1][1] = this.bounds.getNorth();
+
+	feature.geometry.coordinates[0][2] = [];
+	feature.geometry.coordinates[0][2][0] = this.bounds.getEast();
+	feature.geometry.coordinates[0][2][1] = this.bounds.getSouth();
+
+	feature.geometry.coordinates[0][3] = [];
+	feature.geometry.coordinates[0][3][0] = this.bounds.getWest();
+	feature.geometry.coordinates[0][3][1] = this.bounds.getSouth();
+
+	feature.geometry.coordinates[0][4] = [];
+	feature.geometry.coordinates[0][4][0] = this.bounds.getWest();
+	feature.geometry.coordinates[0][4][1] = this.bounds.getNorth();
+	
+	feature.properties = {};
+	
+	//alert(JSON.stringify(feature, null, 2));
+	
+	j.features.push(feature);
+	
+	
+	j.bbox[0] = this.bounds.getWest();
+	j.bbox[1] = this.bounds.getSouth();
+	j.bbox[2] = this.bounds.getEast();
+	j.bbox[3] = this.bounds.getNorth();
+	
+	//add_data(j);
+	
+	//console.log(JSON.stringify(j, null, 2));
+}
+
+
+	
+
+
+//----------------------------------------------------------------------------------------
+function GeoDraw()
+{
+
+}
+
+//----------------------------------------------------------------------------------------
+GeoDraw.prototype.x = function() 
+{
+	
+}
+
+/*
+// coordinates
+
+var p1 = L.point(10, 10),
+p2 = L.point(40, 60),
+bounds = L.bounds(p1, p2);
+
+alert(JSON.stringify(bounds));
+
+// transformations
+
+//var projection = L.Projection.SphericalMercator();
+
+var latlng = L.latLng(50.5, 30.5);
+alert(JSON.stringify(latlng));
+
+
+//
+var pt = L.Projection.SphericalMercator.project(latlng);
+alert(JSON.stringify(pt));
+
+latlng = L.Projection.SphericalMercator.unproject(pt);
+alert(JSON.stringify(latlng));
+*/
+
+/*
+// project at zoom level 0
+var pt = L.CRS.EPSG3857.latLngToPoint(latlng, 0);
+alert(JSON.stringify(pt));
+
+latlng = L.CRS.EPSG3857.pointToLatLng(pt, 0);
+alert(JSON.stringify(latlng));
+*/
+
+
+
+
+// Banza
+newick = '((((((1:0.003181,(2:0.020173,(3:0.004824,4:0.003941):0.013348):0.004084):0.011951,((5:0,6:0):0.028291,(7:0,8:0):0.031470):0.000672):0.007252,(((11:0.002641,12:0.002143):0.018060,((13:0.002093,14:0.002688):0.002807,(15:0.000473,16:0.000324):0.003169):0.016605):0.002041,((17:0.007032,18:0.008551):0.017162,19:0.025889):0.002026):0.014358):0.002074,(9:0.017669,10:0.014463):0.029122):0.029830,(21:0.000261,22:-0.000261):0.059528):0.007831,20:0.062228,(23:0.098848,24:0.100637):0.018084);';
+
+var pts = {"22":[23.06222222,-161.9261111],"21":[23.06222222,-161.9261111],"4":[21.975,-159.4661111],"3":[22.15388889,-159.625],"10":[21.33722222,-157.8177778],"9":[21.41638889,-158.1036111],"2":[21.44472222,-158.1013889],"1":[21.54916667,-158.1869444],"6":[21.10972222,-156.9027778],"5":[21.10972222,-156.9027778],"8":[20.81472222,-156.8758333],"7":[20.81472222,-156.8705556],"12":[20.93722222,-156.6194444],"11":[20.855,-156.6033333],"16":[20.845,-156.5572222],"15":[20.845,-156.5572222],"14":[20.81777778,-156.2302778],"13":[20.81777778,-156.2302778],"18":[19.50888889,-155.8627778],"17":[19.57055556,-155.1886111],"19":[20.12916667,-155.7691667]};
+
+var G = new GeoLayout();
+
+// tree
+    var t = new Tree();
+	t.Parse(newick);
+
+	if (t.error != 0) {
+	} else {
+	
+	
+		G.tree = t;
+	
+		t.ComputeWeights(t.root);
+		
+		var td = new GeoTreeDrawer();
+				
+		td.Init(t, { width:10, height:10, fontHeight:0 } );
+		
+		td.CalcCoordinates();
+		
+		// GeoJSON...
+		
+			var j = {};
+			j.type = "FeatureCollection";
+			//j.bbox = [];
+			j.features = [];
+	
+			/*
+			// show occurrences
+			for (var i in this.occurrences) {
+				var feature = {};
+				feature.type = "Feature";
+				feature.geometry = {};
+				feature.geometry.type = "Point";
+		
+				feature.geometry.coordinates = [];
+				feature.geometry.coordinates[0] = this.occurrences[i].lng;
+				feature.geometry.coordinates[1] = this.occurrences[i].lat;
+		
+				feature.properties = {};
+				feature.properties.name = i;
+				feature.properties.popupContent = i;
+		
+				j.features.push(feature);
+			}
+			*/
+			
+			var feature = {};
+			feature.type = "Feature";
+			feature.geometry = {};
+			feature.geometry.type = "MultiLineString";
+			feature.geometry.coordinates = [];
+			
+			feature.properties = {};
+			feature.properties.style = {weight:2,color:"black",opacity:0.5};			
+		
+			var n = new NodeIterator(t.root);
+			var p = n.Begin();
+			while (p != null)
+			{
+				if (p.IsLeaf())
+				{
+					var p0 = p.xy
+					var p1 = [];
+					var anc = p.ancestor;
+					if (anc)
+					{
+						p1['x'] = p.backarc['x'];
+						p1['y'] = p.backarc['y'];
+						
+						var coordinates = [];
+						coordinates[0] = [];
+						coordinates[0][0] = p0['x'];
+						coordinates[0][1] = p0['y'];
+
+						coordinates[1] = [];
+						coordinates[1][0] = p1['x'];
+						coordinates[1][1] = p1['y'];
+
+						feature.geometry.coordinates.push(coordinates);
+					}				
+				} else {
+	
+					var p0 = [];
+					var p1 = [];
+	
+					p0['x'] = p.xy['x'];
+					p0['y'] = p.xy['y'];
+		
+					var anc = p.ancestor;
+					if (anc)
+					{
+						p1['x'] = anc.xy['x'];
+						p1['y'] = p0['y'];
+						
+						var coordinates = [];
+						coordinates[0] = [];
+						coordinates[0][0] = p0['x'];
+						coordinates[0][1] = p0['y'];
+
+						coordinates[1] = [];
+						coordinates[1][0] = p1['x'];
+						coordinates[1][1] = p1['y'];
+
+						feature.geometry.coordinates.push(coordinates);
+					}
+					
+					// vertical line
+					p0['x'] = p0['x'];
+					p0['y'] = p.child.backarc['y'];
+					p1['x'] = p0['x'];
+					p1['y'] = p.child.GetRightMostSibling().backarc['y'];
+					
+					var coordinates = [];
+					coordinates[0] = [];
+					coordinates[0][0] = p0['x'];
+					coordinates[0][1] = p0['y'];
+
+					coordinates[1] = [];
+					coordinates[1][0] = p1['x'];
+					coordinates[1][1] = p1['y'];
+
+					feature.geometry.coordinates.push(coordinates);				
+				
+				}
+				p = n.Next();
+			}	
+			
+			
+			/*
+			var n = new NodeIterator(t.root);
+			var p = n.Begin();
+			while (p != null)
+			{
+				if (p.IsLeaf())
+				{
+					var p0 = p.xy
+					var p1 = [];
+					var anc = p.ancestor;
+					if (anc)
+					{
+						p1['x'] = p.backarc['x'];
+						p1['y'] = p.backarc['y'];
+						
+						//drawLine(this.settings.svg_id, p0, p1);	
+						
+						var feature = {};
+						feature.type = "Feature";
+						feature.geometry = {};
+						feature.geometry.type = "LineString";
+		
+						feature.geometry.coordinates = [];
+						feature.geometry.coordinates[0] = [];
+						feature.geometry.coordinates[0][0] = p0['x'];
+						feature.geometry.coordinates[0][1] = p0['y'];
+
+						feature.geometry.coordinates[1] = [];
+						feature.geometry.coordinates[1][0] = p1['x'];
+						feature.geometry.coordinates[1][1] = p1['y'];
+
+						feature.properties = {};
+						feature.properties.name = i;
+						feature.properties.popupContent = i;
+						
+						feature.properties.style = {weight:2,color:"black",opacity:0.5};
+		
+						j.features.push(feature);
+					}				
+				} else {
+	
+					var p0 = [];
+					var p1 = [];
+	
+					p0['x'] = p.xy['x'];
+					p0['y'] = p.xy['y'];
+		
+					var anc = p.ancestor;
+					if (anc)
+					{
+						p1['x'] = anc.xy['x'];
+						p1['y'] = p0['y'];
+		
+						var feature = {};
+						feature.type = "Feature";
+						feature.geometry = {};
+						feature.geometry.type = "LineString";
+		
+						feature.geometry.coordinates = [];
+						feature.geometry.coordinates[0] = [];
+						feature.geometry.coordinates[0][0] = p0['x'];
+						feature.geometry.coordinates[0][1] = p0['y'];
+
+						feature.geometry.coordinates[1] = [];
+						feature.geometry.coordinates[1][0] = p1['x'];
+						feature.geometry.coordinates[1][1] = p1['y'];
+
+						feature.properties = {};
+						feature.properties.name = i;
+						feature.properties.popupContent = i;
+						
+						feature.properties.style = {weight:2,color:"black",opacity:0.5};
+		
+						j.features.push(feature);
+					}
+					
+					// vertical line
+					p0['x'] = p0['x'];
+					p0['y'] = p.child.backarc['y'];
+					p1['x'] = p0['x'];
+					p1['y'] = p.child.GetRightMostSibling().backarc['y'];
+					
+					var feature = {};
+					feature.type = "Feature";
+					feature.geometry = {};
+					feature.geometry.type = "LineString";
+	
+					feature.geometry.coordinates = [];
+					feature.geometry.coordinates[0] = [];
+					feature.geometry.coordinates[0][0] = p0['x'];
+					feature.geometry.coordinates[0][1] = p0['y'];
+
+					feature.geometry.coordinates[1] = [];
+					feature.geometry.coordinates[1][0] = p1['x'];
+					feature.geometry.coordinates[1][1] = p1['y'];
+
+					feature.properties = {};
+					feature.properties.name = i;
+					feature.properties.popupContent = i;
+					
+					feature.properties.style = {weight:2,color:"black",opacity:0.5};
+	
+					j.features.push(feature);
+
+				
+				
+				}
+				p = n.Next();
+			}	
+			*/				
+			j.features.push(feature);
+			alert(JSON.stringify(j, null, 2));
+			add_data(j);
+		
+	}
+
+
+
+for (var i in pts) {
+	G.AddOccurrence(i, L.latLng(pts[i]));
+	//console.log(i + ' ' + JSON.stringify(L.latLng(pts[i])));
+}
+
+G.GetTreeRect();
+G.PlaceTree();
+G.DrawTree();
+
+
+
+
+G.dump();
+
+// display a map here for debugging?
+
+
+showtree('svg', newick);
+/*
+// compress draw
+    var t = new Tree();
+	t.Parse(newick);
+	
+	t.ComputeWeights(t.root);
+	
+	var a = t.CompressDraw();
+	
+	document.getElementById('output').innerHTML = a.join("<br/>");
+	
+*/	
+
+
+</script>
+
+</body>
+</html>

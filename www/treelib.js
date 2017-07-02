@@ -175,6 +175,7 @@ function Node(label)
 	this.id = 0;
 	this.weight = 0;
 	this.xy = [];
+	this.backarc = [];
 	this.edge_length = 0.0;
 	this.path_length = 0.0;
 	this.depth = 0;
