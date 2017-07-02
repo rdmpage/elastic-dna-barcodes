@@ -155,6 +155,25 @@ function write_meta($filename = 'meta.xml')
 
 write_meta();
 
+// clean up any existing files
+if (file_exists('occurrences.tsv'))
+{
+	unlink('occurrences.tsv');
+}
+if (file_exists('sequences.tsv'))
+{
+	unlink('sequences.tsv');
+}
+if (file_exists('images.tsv'))
+{
+	unlink('images.tsv');
+}
+if (file_exists('references.tsv'))
+{
+	unlink('references.tsv');
+}
+
+
 
 $zip = new ZipArchive();
 $filename = "dwca.zip";
@@ -298,6 +317,11 @@ $ids=array(
 'JF440280',
 'KJ095190'
 );
+
+$ids=array(995952586);
+
+// ostrich in India
+$ids=array('KU251475');
 
 
 $data = fetch_sequences($ids);
