@@ -13,10 +13,27 @@
 	<link rel="stylesheet" href="leaflet.draw/leaflet.draw.css"/>
 	<script src="leaflet.draw/leaflet.draw.js" type="text/javascript"></script>	
 
+    <style type="text/css">
+	  
+	.mydivicon{
+		width: 12px
+		height: 12px;
+		border-radius: 10px;
+		background: black; 
+		border: 1px solid #fff;
+		opacity: 0.85
+	}	  
+    </style>
+
 
 	<script>
 		var map;
 		var geojson = null;
+	
+		// http://gis.stackexchange.com/a/116193
+		// http://jsfiddle.net/GFarkas/qzdr2w73/4/
+		var icon = new L.divIcon({className: 'mydivicon'});		
+	
 	
 		function onEachFeature(feature, layer) {
 			// does this feature have a property named popupContent?
@@ -46,11 +63,18 @@
 		}
 		
 		function add_data(data) {
-		    if (geojson) {
+		    /*if (geojson) {
 		    	map.removeLayer(geojson);
-		    }
+		    }*/
 			
-			geojson = L.geoJson(data, { 
+			geojson = L.geoJson(data, {
+			
+			
+			pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: icon});
+            },			
+			 
 			style: function (feature) {
 				return feature.properties && feature.properties.style;
 			},
@@ -630,6 +654,7 @@ function GeoLayout() {
 	this.pts = []; // ?why
 	
 	this.occurrences = [];
+	this.occurrence_bounds = null;
 	
 	this.tree = null;
 	this.tree_bounds = null;
@@ -688,10 +713,18 @@ GeoLayout.prototype.AddOccurrence = function(label, latlng) {
 
 	this.occurrences[label] = latlng;
 	
+	// bounds for whole structure
 	if (!this.bounds) {
 		this.bounds = L.latLngBounds(latlng, latlng);	
 	} else {
 		this.bounds.extend(latlng);
+	}
+
+	// bounds for occurrences
+	if (!this.occurrence_bounds) {
+		this.occurrence_bounds = L.latLngBounds(latlng, latlng);	
+	} else {
+		this.occurrence_bounds.extend(latlng);
 	}
 	
 	//console.log(label + ' ' + JSON.stringify(this.bounds));
@@ -712,6 +745,49 @@ GeoLayout.prototype.GetTreeRect = function() {
 //----------------------------------------------------------------------------------------
 GeoLayout.prototype.PlaceTree = function() {
 }
+
+
+//----------------------------------------------------------------------------------------
+// Return the centre of the bounding box around the occurrences
+GeoLayout.prototype.GetCentreOfOccurrences = function() {
+	var centre = this.occurrence_bounds.getCenter();	
+
+	return centre;
+}
+
+//----------------------------------------------------------------------------------------
+// Greatest extent of occurrences, could be greatest dimension of bounding box,
+// or eventually length of best fitting line to occurrences
+GeoLayout.prototype.GetOccurrenceSpan = function() {
+	var span = 0;
+
+	var width = this.occurrence_bounds.getEast() - this.occurrence_bounds.getWest();
+	var height = this.occurrence_bounds.getNorth() - this.occurrence_bounds.getSouth();
+	
+	var span = Math.max(width, height);
+
+	return span;
+}
+
+//----------------------------------------------------------------------------------------
+// The angle to rotate the tree to best align with the occurrences
+// to do: find best fitting line for occurrences and use that
+GeoLayout.prototype.GetBestAngle = function() {
+	var angle = 0.0;
+	
+	var width = this.occurrence_bounds.getEast() - this.occurrence_bounds.getWest();
+	var height = this.occurrence_bounds.getNorth() - this.occurrence_bounds.getSouth();
+	
+	if (height > width) {
+		angle = 0.0;
+	} else {
+		angle = 90.0;
+	}
+	
+	return angle;
+}
+
+
 
 //----------------------------------------------------------------------------------------
 // Output GeoJSON
@@ -781,7 +857,7 @@ GeoLayout.prototype.dump = function() {
 	j.bbox[2] = this.bounds.getEast();
 	j.bbox[3] = this.bounds.getNorth();
 	
-	//add_data(j);
+	add_data(j);
 	
 	//console.log(JSON.stringify(j, null, 2));
 }
@@ -837,6 +913,75 @@ alert(JSON.stringify(latlng));
 */
 
 
+/*
+//----------------------------------------------------------------------------------------------	
+function scale_point(pt, origin, scale_x, scale_y) {
+	// Translate w.r.t. origin
+	pt['x'] -= origin['x'];
+	pt['y'] -= origin['y'];
+
+	// scale
+	pt['x'] *= scale_x;
+	pt['y'] *= scale_y;
+
+	// Translate back 
+	pt['x'] += origin['x'];
+	pt['y'] += origin['y'];
+	
+	return pt;
+}	
+*/
+
+
+//----------------------------------------------------------------------------------------------
+function offset_point(pt, offset)
+{
+	pt[0] += offset[0];
+	pt[1] += offset[1];
+	
+	return pt;
+}
+
+
+//----------------------------------------------------------------------------------------------	
+function scale_point(pt, origin, scale_x, scale_y) {
+	// Translate w.r.t. origin
+	pt[0] -= origin[0];
+	pt[1] -= origin[1];
+
+	// scale
+	pt[0] *= scale_x;
+	pt[1] *= scale_y;
+
+	// Translate back 
+	pt[0] += origin[0];
+	pt[1] += origin[1];
+	
+	return pt;
+}	
+
+//----------------------------------------------------------------------------------------------
+function rotate_point(pt, origin, angle_in_degrees)
+{
+	// Translate w.r.t. origin
+	pt[0] -= origin[0];
+	pt[1] -= origin[1];
+	
+	// Rotate
+	var x = pt[0];
+	var y = pt[1];
+	
+	var angle = angle_in_degrees * (Math.PI / 180);
+	pt[0] = x * Math.cos(angle) - y * Math.sin(angle);
+	pt[1] = y * Math.cos(angle) + x * Math.sin(angle);
+	
+	// Translate back 
+	pt[0] += origin[0];
+	pt[1] += origin[1];
+	
+	return pt;
+}
+
 
 
 // Banza
@@ -844,7 +989,41 @@ newick = '((((((1:0.003181,(2:0.020173,(3:0.004824,4:0.003941):0.013348):0.00408
 
 var pts = {"22":[23.06222222,-161.9261111],"21":[23.06222222,-161.9261111],"4":[21.975,-159.4661111],"3":[22.15388889,-159.625],"10":[21.33722222,-157.8177778],"9":[21.41638889,-158.1036111],"2":[21.44472222,-158.1013889],"1":[21.54916667,-158.1869444],"6":[21.10972222,-156.9027778],"5":[21.10972222,-156.9027778],"8":[20.81472222,-156.8758333],"7":[20.81472222,-156.8705556],"12":[20.93722222,-156.6194444],"11":[20.855,-156.6033333],"16":[20.845,-156.5572222],"15":[20.845,-156.5572222],"14":[20.81777778,-156.2302778],"13":[20.81777778,-156.2302778],"18":[19.50888889,-155.8627778],"17":[19.57055556,-155.1886111],"19":[20.12916667,-155.7691667]};
 
+// FRogs
+
+newick = '((((1:0.004443,2:0.004731):0.002512,(3:0.004614,(4:0.001525,5:0):0.006120):0.010057):0.101141,19:0.114107):0.084212,((6:0.007386,((7:0,8:0):0,9:0):0.017292):0.008109,(((10:0,((11:0.001520,(13:0,(14:0,(15:0,(16:0,18:0.001520):0):0):0):0):0.001525,17:0.004576):0.001520):0,12:0.003044):0.006236,(20:0.006484,(21:0,22:0.001519):0.004212):0.015755):0.017828):0);';
+
+pts = {
+"AMPSA361_13.COI_5P": [0.15,33.152],
+"AMPSA220_13.COI_5P": [-7.753,19.957],
+"AMPSA232_13.COI_5P": [-10.781,40.458],
+"AMPSA036_12.COI_5P": [-8.75722,31.1144],
+"AMPSA198_13.COI_5P": [-32.299,28.842],
+"AMPSA218_13.COI_5P": [-32.702,28.351],
+"AMPSA224_13.COI_5P": [-31.828,29.297],
+"AMPSA024_12.COI_5P": [-9.36256,30.1237],
+"AMPSA016_12.COI_5P": [-15.6032,28.2643],
+"AMPSA242_13.COI_5P": [-15.705,17.459],
+"AMPSA315_13.COI_5P": [-19.053,22.084],
+"AMPSA014_12.COI_5P": [-9.36256,30.1237],
+"AMPSA192_13.COI_5P": [-31.278,30.005],
+"AMPSA301_13.COI_5P": [-25.499,30.949],
+"AMPSA366_13.COI_5P": [-24.052,30.135]
+};
+
+
 var G = new GeoLayout();
+
+for (var i in pts) {
+	G.AddOccurrence(i, L.latLng(pts[i]));
+	//console.log(i + ' ' + JSON.stringify(L.latLng(pts[i])));
+}
+
+G.GetTreeRect();
+G.PlaceTree();
+G.DrawTree();
+
+G.dump();
 
 // tree
     var t = new Tree();
@@ -891,6 +1070,8 @@ var G = new GeoLayout();
 			}
 			*/
 			
+			var tree_polyline = [];
+			
 			var feature = {};
 			feature.type = "Feature";
 			feature.geometry = {};
@@ -924,6 +1105,9 @@ var G = new GeoLayout();
 						coordinates[1][1] = p1['y'];
 
 						feature.geometry.coordinates.push(coordinates);
+						
+						tree_polyline.push(coordinates);
+						
 					}				
 				} else {
 	
@@ -949,6 +1133,8 @@ var G = new GeoLayout();
 						coordinates[1][1] = p1['y'];
 
 						feature.geometry.coordinates.push(coordinates);
+						
+						tree_polyline.push(coordinates);
 					}
 					
 					// vertical line
@@ -966,139 +1152,153 @@ var G = new GeoLayout();
 					coordinates[1][0] = p1['x'];
 					coordinates[1][1] = p1['y'];
 
-					feature.geometry.coordinates.push(coordinates);				
+					feature.geometry.coordinates.push(coordinates);	
+					
+					tree_polyline.push(coordinates);			
 				
 				}
 				p = n.Next();
 			}	
+			// add this MultiLineString representation of the tree to the GeoJSON
 			
+			
+			// transform
+			
+			// scale
+			
+			//alert(JSON.stringify(tree_polyline, null, 2));
+			
+			// console.log(JSON.stringify(tree_polyline, null, 2));
+			
+			// Origin is the centre of the tree drawing, in this case a 10 x 10 rectangle
+			var origin = [];
+			origin[0] = 5;
+			origin[1] = 5;
+			
+			var centre = G.GetCentreOfOccurrences();
+			
+			var offset = [];
+			offset[0] = centre.lng - origin[0];
+			offset[1] = centre.lat - origin[1];
+			
+			// Move centre of tree to centre of occurrences
+			for (var i = 0; i < tree_polyline.length; i++) {
+				for (var k = 0; k < tree_polyline[i].length; k++) {
+						tree_polyline[i][k] = offset_point(tree_polyline[i][k], offset);
+				}
+			}
+			
+
+			// What angle should tree be to best match points?
+
+			//Origin is now the centre of the occurrences 
+			origin[0] = centre.lng;
+			origin[1] = centre.lat;
+			
+			
+			
+			var angle = G.GetBestAngle();
+			
+			for (var i = 0; i < tree_polyline.length; i++) {
+				for (var k = 0; k < tree_polyline[i].length; k++) {
+						tree_polyline[i][k] = rotate_point(tree_polyline[i][k], origin, angle);
+				}
+			}
+			
+		
+			// How big should tree be?
+
+			// Need to make width of tree match width of occurrences 
+			
+			var scale = G.GetOccurrenceSpan() / 10;
+			
+			//alert(scale);
+			
+			// scale 
+			for (var i = 0; i < tree_polyline.length; i++) {
+				for (var k = 0; k < tree_polyline[i].length; k++) {
+						tree_polyline[i][k] = scale_point(tree_polyline[i][k], origin, scale, scale);
+				}
+			}
+
+
+			// now, where do we need to put the tree w.r.t. the occurrences 
+			
+			offset = [];
+			if (angle == 90) {
+				offset[0] = 0;
+				offset[1] = -(10 * scale);
+			} else {
+				offset[0] = -(10 * scale);
+				offset[1] = 0;
+			
+			}
+			
+			// Move centre of tree to centre of occurrences
+			for (var i = 0; i < tree_polyline.length; i++) {
+				for (var k = 0; k < tree_polyline[i].length; k++) {
+						tree_polyline[i][k] = offset_point(tree_polyline[i][k], offset);
+				}
+			}
+			
+
+			
+			
+			//alert(JSON.stringify(tree_polyline, null, 2));
+			
+			// rotate
+			
+			
+			
+			feature.geometry.coordinates = [];
+			feature.geometry.coordinates = tree_polyline;
+			
+			j.features.push(feature);
 			
 			/*
-			var n = new NodeIterator(t.root);
-			var p = n.Begin();
+			// line from leaf to margin of rectangle
+			feature = {};
+			feature.type = "Feature";
+			feature.geometry = {};
+			feature.geometry.type = "MultiLineString";
+			feature.geometry.coordinates = [];
+			
+			feature.properties = {};
+			feature.properties.style = {weight:1,color:"red",opacity:0.5};	
+			
+			p = n.Begin();
 			while (p != null)
 			{
 				if (p.IsLeaf())
 				{
 					var p0 = p.xy
 					var p1 = [];
-					var anc = p.ancestor;
-					if (anc)
-					{
-						p1['x'] = p.backarc['x'];
-						p1['y'] = p.backarc['y'];
-						
-						//drawLine(this.settings.svg_id, p0, p1);	
-						
-						var feature = {};
-						feature.type = "Feature";
-						feature.geometry = {};
-						feature.geometry.type = "LineString";
-		
-						feature.geometry.coordinates = [];
-						feature.geometry.coordinates[0] = [];
-						feature.geometry.coordinates[0][0] = p0['x'];
-						feature.geometry.coordinates[0][1] = p0['y'];
-
-						feature.geometry.coordinates[1] = [];
-						feature.geometry.coordinates[1][0] = p1['x'];
-						feature.geometry.coordinates[1][1] = p1['y'];
-
-						feature.properties = {};
-						feature.properties.name = i;
-						feature.properties.popupContent = i;
-						
-						feature.properties.style = {weight:2,color:"black",opacity:0.5};
-		
-						j.features.push(feature);
-					}				
-				} else {
-	
-					var p0 = [];
-					var p1 = [];
-	
-					p0['x'] = p.xy['x'];
-					p0['y'] = p.xy['y'];
-		
-					var anc = p.ancestor;
-					if (anc)
-					{
-						p1['x'] = anc.xy['x'];
-						p1['y'] = p0['y'];
-		
-						var feature = {};
-						feature.type = "Feature";
-						feature.geometry = {};
-						feature.geometry.type = "LineString";
-		
-						feature.geometry.coordinates = [];
-						feature.geometry.coordinates[0] = [];
-						feature.geometry.coordinates[0][0] = p0['x'];
-						feature.geometry.coordinates[0][1] = p0['y'];
-
-						feature.geometry.coordinates[1] = [];
-						feature.geometry.coordinates[1][0] = p1['x'];
-						feature.geometry.coordinates[1][1] = p1['y'];
-
-						feature.properties = {};
-						feature.properties.name = i;
-						feature.properties.popupContent = i;
-						
-						feature.properties.style = {weight:2,color:"black",opacity:0.5};
-		
-						j.features.push(feature);
-					}
 					
-					// vertical line
-					p0['x'] = p0['x'];
-					p0['y'] = p.child.backarc['y'];
-					p1['x'] = p0['x'];
-					p1['y'] = p.child.GetRightMostSibling().backarc['y'];
-					
-					var feature = {};
-					feature.type = "Feature";
-					feature.geometry = {};
-					feature.geometry.type = "LineString";
-	
-					feature.geometry.coordinates = [];
-					feature.geometry.coordinates[0] = [];
-					feature.geometry.coordinates[0][0] = p0['x'];
-					feature.geometry.coordinates[0][1] = p0['y'];
+					p1['x'] = 10;
+					p1['y'] = p0['y'];
 
-					feature.geometry.coordinates[1] = [];
-					feature.geometry.coordinates[1][0] = p1['x'];
-					feature.geometry.coordinates[1][1] = p1['y'];
+					var coordinates = [];
+					coordinates[0] = [];
+					coordinates[0][0] = p0['x'];
+					coordinates[0][1] = p0['y'];
 
-					feature.properties = {};
-					feature.properties.name = i;
-					feature.properties.popupContent = i;
-					
-					feature.properties.style = {weight:2,color:"black",opacity:0.5};
-	
-					j.features.push(feature);
+					coordinates[1] = [];
+					coordinates[1][0] = p1['x'];
+					coordinates[1][1] = p1['y'];
 
-				
-				
-				}
+					feature.geometry.coordinates.push(coordinates);
+				} 
 				p = n.Next();
 			}	
-			*/				
 			j.features.push(feature);
-			alert(JSON.stringify(j, null, 2));
+			*/
+			//alert(JSON.stringify(tree_polyline, null, 2));
 			add_data(j);
 		
 	}
 
 
 
-for (var i in pts) {
-	G.AddOccurrence(i, L.latLng(pts[i]));
-	//console.log(i + ' ' + JSON.stringify(L.latLng(pts[i])));
-}
-
-G.GetTreeRect();
-G.PlaceTree();
-G.DrawTree();
 
 
 
