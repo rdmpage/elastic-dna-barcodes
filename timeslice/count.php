@@ -57,7 +57,7 @@ for ($year = $start_year; $year <= $end_year; $year++)
 			$term = 'ddbj embl genbank with limits[filt] NOT transcriptome[All Fields] NOT mRNA[filt] NOT TSA[All Fields] NOT scaffold[All Fields]';
 
 			// geography
-			if (1)
+			if (0)
 			{
 				$term .= 'AND src lat lon[prop]'; // lat_lon field
 			}
