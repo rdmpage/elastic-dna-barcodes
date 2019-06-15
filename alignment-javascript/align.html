@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample NtSeq Project</title>
+    <script src="ntseq.js"></script>
+    <style>
+
+
+      #output {
+
+        white-space: pre-line;
+
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+  <script>
+  
+  // Create a basic print function
+    function print(str) {
+
+      var el = document.getElementById('output');
+      el.innerHTML += str + '\n';
+
+    };
+
+    function clear() {
+
+      var el = document.getElementById('output');
+      el.innerHTML = '';
+
+    };
+
+    // align two sequences
+    
+    function main() {
+    
+     var seq = new Nt.Seq();
+
+      var a = `>MG569363.1 Diacamma pallidum isolate ZB45901 cytochrome oxidase subunit 1 (COI) gene, partial cds; mitochondrial
+TTATCCTCAATCATATTTCACAGAAATTTCTCCACAGACTTATCAATCTTTTCTCTTCACTTAGCAGGTT
+TATCTTCAATCATAGGAGCTATTAACTTCATTTCTACAATCCTAAATATACACCACCCTAACATTACCTT
+AGAAAAAATCCCCCTCATAACATGATCAATCTTAATCACTACAATTCTACTCCTCCTAGCTCTCCCAGTT
+CTTGCAGGAGCTATTACCATATTACTTTTTGATCGAAATTTTAATACATCTTTTTTTGACCCTTCAGGAG
+GAGGAGATCCTATCTTATTTCAACATCTATTT
+`;
+
+var b = `>HQ619699.1 Diacamma rugosum voucher 2009_5_058 cytochrome oxidase subunit I (COI) gene, partial cds; mitochondrial
+ATAATTTATTTTATTTTTGCTATCTGATCAGGACTAATTGGATCATCATTAAGTATAATTATTCGATTAG
+AACTTGGTACTTGCAATTCTATCATTAATAATGACCAAATTTATAATACAATTATTACCAATCATGCTTT
+AATTATAATTTTTTTTATAGTAATGCCTTTTATAATTGGAGGATTTGGAAATTATCTAATTCCACTAATA
+ATTGCATCTCCAGACATAGCTTATCCACGAATAAATAATATAAGATTTTGACTTCTACCTCCTTCCTTAA
+CTTTACTCATTTTTAGATCAATCTATTCCAATGGTATAGGAACAGGATGAACCATTTATCCACCATTATC
+TTCAATCAGATTTCATAGAAATTTTTCTACAGACTTATCAATCTTTTCTCTTCACTTAACAGGACTATCT
+TCAATTATAGGAGCTATTAATTTTATTTCTACAATTTTAAACATACACCATCCTAATATTACCTTAGAAA
+AAATTCCTCTCATAACATGATCCATTTTAATTACTACCATTTTACTTCTTCTATCTCTACCAGTACTTGC
+TGGTGCTATTACCATATTACTATTTGACCGAAATTTCAATACATCCTTCTTTGATCCCTCTGGAGGTGGA
+GATCCTATCCTATTCCAACATCTTTTT`;
+
+      seq.readFASTA(b);
+
+      clear();
+
+      print('Sequence:');
+      print(seq.sequence());
+      
+	var querySeq = (new Nt.Seq()).readFASTA(a);
+	print(querySeq.sequence());
+
+     var map = seq.mapSequence(querySeq).initialize().sort();
+     
+    
+     
+print(map.best().position); // === 3
+
+print(map.best().alignmentMask().sequence());
+    
+   /*
+    
+    var seq = (new Nt.Seq()).read('ATGCCCGACTGCA');
+var querySeq = (new Nt.Seq()).read('CCCW');
+
+var map = new Nt.MatchMap(seq, querySeq);
+
+map.best().position; // === 3
+map.best().matches; // === 3
+map.best().alignment().sequence(); // === 'CCCG'
+
+// this is the actual nucleotides that match, gaps for non-matches
+print(map.best().alignmentMask().sequence()); // === 'CCC-'
+*/
+    
+    }
+    
+    main();
+</script>
+</body>
+</html>

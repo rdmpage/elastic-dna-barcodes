@@ -196,6 +196,8 @@ function write_meta($filename = 'meta.xml')
 }
 
 
+
+
 // project 
 if (1)
 {
@@ -207,8 +209,9 @@ if (1)
 	// DSCHA see http://dx.doi.org/10.1371/journal.pone.0099546
 	// DS-LIFE Lizard Island fish see https://doi.org/10.3897/BDJ.5.e12409
 	// DS-NGSTYPES DNA barcodes from century-old type specimens using next-generation sequencing
+	// DS-TABAC Exploring Genetic Divergence in a Species-Rich Insect Genus Using 2790 DNA Barcodes https://dx.doi.org/10.1371%2Fjournal.pone.0138993
 	$parameters = array(
-		'container' => 'DS-NGSTYPES',
+		'container' => 'DS-TABAC',
 		'format' => 'tsv'
 		);
 }
@@ -257,8 +260,26 @@ if (0)
 	
 $url .= '?' . http_build_query($parameters);
 
-//echo $url . "\n";
+$cache_file_name = 'cache.json';
 
+if (isset($parameters->container))
+{
+	$cache_file_name = $parameters->container . '.json';
+}
+
+if (isset($parameters->geo))
+{
+	$cache_file_name = $parameters->geo . '.json';
+}
+
+if (isset($parameters->bin))
+{
+	$cache_file_name = str_replace(':', '-', $parameters->bin) . '.json';
+}
+
+
+
+//echo $url . "\n";
 
 write_meta();
 
@@ -295,6 +316,8 @@ $data = get($url);
 
 if ($data)
 {
+	file_put_contents($cache_file_name, $data);
+
 	$lines = explode("\n", $data);
 
 	$keys = array();

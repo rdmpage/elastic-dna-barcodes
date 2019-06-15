@@ -102,6 +102,7 @@ function data_store_elastic($data)
 // Archive to parse
 
 $archive = "../converters/dwca.zip";
+$archive = "../converters/dwca-lizard-island.zip";
 
 $basedir = dirname(__FILE__) . '/tmp/';
 

@@ -5,6 +5,11 @@ Using Elasticsearch to analyse DNA barcodes and GenBank sequences, with thoughts
 
 Index barcodes in Elasticsearch to provide BLAST-like search (based on 5-tuples), and also geospatial search. Build phylogenies on the fly using 5-tuple distance matrix and NJ.
 
+## Alignment-free phylogeny
+
+Numerous references (see `docs` folder). See Fan et al. 10.1186/s12864-015-1647-5 for a formula to compute sequences distance D from a companion of k-mers. See Yang Zhang, L. 10.1093/nar/gkn075 for justification of 5-mers.
+
+
 ## CouchDB
 
 Use CouchDB to generate tiles of barcodes.
@@ -23,7 +28,7 @@ Could calculate phylogenetic diversity over a grid, say by indexing data in Couc
 
 ## Anthropocene
 
-Could compare to Miraldo et al. who easier diversity WITHIN species but not between.
+Could compare to Miraldo et al. who estimate diversity WITHIN species but not between.
 
 Miraldo, A., Li, S., Borregaard, M. K., Florez-Rodriguez, A., Gopalakrishnan, S., Rizvanovic, M., … Nogues-Bravo, D. (2016, September 29). An Anthropocene map of genetic diversity. Science. American Association for the Advancement of Science (AAAS). https://doi.org/10.1126/science.aaf4381
 
@@ -150,6 +155,10 @@ There doesn’t seem to be an obvious match between all the names in the table a
 
 ## References
 
+Criscuolo, A. (2019). A fast alignment-free bioinformatics procedure to infer accurate distance-based phylogenetic trees from genome assemblies. Research Ideas and Outcomes, 5. doi:10.3897/rio.5.e36178
+
+Fan, H., Ives, A. R., Surget-Groba, Y., & Cannon, C. H. (2015). An assembly and alignment-free method of phylogeny reconstruction from next-generation sequencing data. BMC Genomics, 16(1). doi:10.1186/s12864-015-1647-5
+
 Gratton, P., Marta, S., Bocksberger, G., Winter, M., Trucchi, E., & Kühl, H. (2016, July 4). A world of sequences: can we use georeferenced nucleotide databases for a robust automated phylogeography? Journal of Biogeography. Wiley-Blackwell. https://doi.org/10.1111/jbi.12786
 
 Miraldo, A., Li, S., Borregaard, M. K., Florez-Rodriguez, A., Gopalakrishnan, S., Rizvanovic, M., … Nogues-Bravo, D. (2016, September 29). An Anthropocene map of genetic diversity. Science. American Association for the Advancement of Science (AAAS). https://doi.org/10.1126/science.aaf4381
@@ -159,6 +168,8 @@ Published online 2014 Apr 7.
 PMCID: [PMC4333696](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4333696/)
 Natural Language Processing Methods for Enhancing Geographic Metadata for Phylogeography of Zoonotic Viruses
 Tasnia Tahsin,1 Rachel Beard,1 Robert Rivera,1 Rob Lauder,1 Garrick Wallstrom, PhD,1 Matthew Scotch, PhD, MPH,1 and Graciela Gonzalez, PhD1
+
+Ondov, B. D., Treangen, T. J., Melsted, P., Mallonee, A. B., Bergman, N. H., Koren, S., & Phillippy, A. M. (2016). Mash: fast genome and metagenome distance estimation using MinHash. Genome Biology, 17(1). doi:10.1186/s13059-016-0997-x
 
 Weissenbacher, D., Tahsin, T., Beard, R., Figaro, M., Rivera, R., Scotch, M., & Gonzalez, G. (2015). Knowledge-driven geospatial location resolution for phylogeographic models of virus migration. Bioinformatics, 31(12), i348–i356. https://10.1093/bioinformatics/btv259
 

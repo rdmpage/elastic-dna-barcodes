@@ -40,7 +40,7 @@
 			<key>parameter</key>
 			<string>retmax</string>
 			<key>value</key>
-			<string>100</string>
+			<string>1000</string>
 		</dict>
 		<dict>
 			<key>inUse</key>

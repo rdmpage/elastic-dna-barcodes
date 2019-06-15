@@ -35,6 +35,15 @@ $config['elastic_options'] = array(
 		);
 		
 		
+// Local Docker Elasticsearch version 5.6.4 http://localhost:32769
+$config['elastic_options'] = array(
+		'index' => 'dna',
+		'protocol' => 'http',
+		'host' => '127.0.0.1',
+		'port' => 32769
+		);
+		
+		
 // CouchDB--------------------------------------------------------------------------------
 $config['couchdb_options'] = array(
 	'database' => 'elastic',
